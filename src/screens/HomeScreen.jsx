@@ -1,12 +1,12 @@
 import React from 'react'
 
 // Local Imports
-import Header from '../components/header'
+import LoginScreen from './LoginScreen'
 
 function HomeScreen() {
    return (
       <div>
-         <Header/>
+         <LoginScreen/>
       </div>
    )
 }

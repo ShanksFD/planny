@@ -1,14 +1,16 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Local imports
-import './App.css';
 import './bootstrap.min.css'
 import HomeScreen from "./screens/HomeScreen"
 import Footer from "./components/footer"
+import Header from './components/header'
+
 function App() {
   return (
     <Router>
-      <main>
+      <Header/>
+      <main className="py-5">
         <Route path="/" component={HomeScreen} exact /> 
       </main>
       <Footer />
