@@ -5,6 +5,7 @@ import './bootstrap.min.css'
 
 // Screens
 import HomeScreen from "./screens/HomeScreen"
+import NewEmployeeScreen from "./screens/NewEmployeeScreen";
 
 // Components
 import Footer from "./components/footer"
@@ -17,6 +18,7 @@ function App() {
 
       <main className="py-5">
         <Route path="/" component={HomeScreen} exact /> 
+        <Route path="/RegisterEmployer" component={NewEmployeeScreen} exact /> 
       </main>
 
       <Footer />
