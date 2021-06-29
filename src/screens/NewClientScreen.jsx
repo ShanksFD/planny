@@ -3,16 +3,21 @@ import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 
 // Local Imports
 import FormContainer from '../components/formContainer';
+import ProjectSteps from '../components/projectSteps';
 
-function NewEmployerScreen() {
-   const submitHandler = () => 
-   {
-      console.log("Handling")
-   }
+function NewClientScreen({history}) {
+
+   const submitHandler = (e) => {
+      e.preventDefault()
+
+      history.push('/project')
+   } 
 
    return (
       <FormContainer>
-         <h1 className="font--light text-center">NEW EMPLOYEE</h1>
+         <ProjectSteps step1 />
+
+         <h1 className="font--light text-center">NEW CLIENT</h1>
          <Form onSubmit={submitHandler}>
             <Row>
                <Col lg={6} md={6} sm={12}>
@@ -38,9 +43,9 @@ function NewEmployerScreen() {
             </Row>
             
             <Row>
-               <Form.Group controlId="password" className="my-3">
-                  <Form.Label>PASSWORD</Form.Label>
-                  <Form.Control type="password" placeholder="Enter password" />
+               <Form.Group controlId="website" className="my-3">
+                  <Form.Label>WEBSITE</Form.Label>
+                  <Form.Control type="text" placeholder="Enter website url" />
                </Form.Group>
             </Row>
 
@@ -53,15 +58,14 @@ function NewEmployerScreen() {
                      </InputGroup.Prepend>
                      <Form.Control type="text" placeholder="Enter phone number" />
                      </InputGroup>
-                  
                </Form.Group>
             </Row>
 
             
-            <Button type="submit" variant="primary">ADD</Button>
+            <Button type="submit" variant="primary">SAVE</Button>
          </Form>
       </FormContainer>
    )
 }
 
-export default NewEmployerScreen
+export default NewClientScreen

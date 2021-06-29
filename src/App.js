@@ -6,10 +6,13 @@ import './bootstrap.min.css'
 // Screens
 import HomeScreen from "./screens/HomeScreen"
 import NewEmployeeScreen from "./screens/NewEmployeeScreen";
+import NewProjectScreen from "./screens/NewProjectScreen";
 
 // Components
 import Footer from "./components/footer"
 import Header from './components/header'
+import NewClientScreen from "./screens/NewClientScreen";
+import NewPhaseScreen from "./screens/NewPhaseScreen";
 
 function App() {
   return (
@@ -18,7 +21,10 @@ function App() {
 
       <main className="py-5">
         <Route path="/" component={HomeScreen} exact /> 
-        <Route path="/RegisterEmployer" component={NewEmployeeScreen} exact /> 
+        <Route path="/employee" component={NewEmployeeScreen} /> 
+        <Route path="/client" component={NewClientScreen} /> 
+        <Route path="/project" component={NewProjectScreen} /> 
+        <Route path="/phase" component={NewPhaseScreen} /> 
       </main>
 
       <Footer />
