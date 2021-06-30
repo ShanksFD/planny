@@ -57,6 +57,39 @@ function NewUserScreen() {
                </Form.Group>
             </Row>
 
+            <Row className="mb-3">
+               <Form.Group as={Row}>
+                  <Form.Label as="legend" column sm={3}>
+                  USER TYPE
+                  </Form.Label>
+                  <Col sm={10}>
+                  <Form.Check
+                     type="radio"
+                     label="Director"
+                     name="userTypeRadios"
+                     id="director"
+                  />
+                  <Form.Check
+                     type="radio"
+                     label="Project Manager"
+                     name="userTypeRadios"
+                     id="projectManager"
+                  />
+                  <Form.Check
+                     type="radio"
+                     label="Secretary"
+                     name="userTypeRadios"
+                     id="secretary"
+                  />
+                  <Form.Check
+                     type="radio"
+                     label="Accounting Manager"
+                     name="userTypeRadios"
+                     id="accountingManager"
+                  />
+                  </Col>
+               </Form.Group>
+            </Row>
             
             <Button type="submit" variant="primary">ADD</Button>
          </Form>
