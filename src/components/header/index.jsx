@@ -31,7 +31,7 @@ function Header() {
                <Navbar.Collapse id="basic-navbar-nav">
                   {userInfo && <Nav className="mr-auto">
                      <LinkContainer to="/">
-                        <Nav.Link>WELCOM, {userInfo.user.email}</Nav.Link>
+                        <Nav.Link>WELCOM, {userInfo.user.first_name}</Nav.Link>
                      </LinkContainer>
                      <LinkContainer to="/">
                         <Nav.Link onClick={logoutHandler}>LOGOUT</Nav.Link>
