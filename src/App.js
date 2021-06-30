@@ -21,7 +21,7 @@ function App() {
 
       <main className="py-5">
         <Route path="/" component={HomeScreen} exact /> 
-        <Route path="/employee" component={NewUserScreen} /> 
+        <Route path="/user" component={NewUserScreen} /> 
         <Route path="/client" component={NewClientScreen} /> 
         <Route path="/project" component={NewProjectScreen} /> 
         <Route path="/phase" component={NewPhaseScreen} /> 

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 // Local Imports
 import LoginScreen from './LoginScreen'
+import AdminScreen from './AdminScreen';
 
 function HomeScreen() {
 
@@ -10,6 +11,9 @@ function HomeScreen() {
    return (
       <div>
          {!userInfo && <LoginScreen/>}
+         {
+            userInfo && <AdminScreen/>
+         }
       </div>
    )
 }
