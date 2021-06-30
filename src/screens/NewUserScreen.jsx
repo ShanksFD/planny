@@ -4,7 +4,7 @@ import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 // Local Imports
 import FormContainer from '../components/formContainer';
 
-function NewEmployerScreen() {
+function NewUserScreen() {
    const submitHandler = () => 
    {
       console.log("Handling")
@@ -12,7 +12,7 @@ function NewEmployerScreen() {
 
    return (
       <FormContainer>
-         <h1 className="font--light text-center">NEW EMPLOYEE</h1>
+         <h1 className="font--light text-center">NEW USER</h1>
          <Form onSubmit={submitHandler}>
             <Row>
                <Col lg={6} md={6} sm={12}>
@@ -64,4 +64,4 @@ function NewEmployerScreen() {
    )
 }
 
-export default NewEmployerScreen
+export default NewUserScreen
