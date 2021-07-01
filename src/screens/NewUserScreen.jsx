@@ -22,8 +22,7 @@ function NewUserScreen() {
    const dispatch = useDispatch()
 
    const userRegister = useSelector(state => state.userRegister)
-   const {error, loading} = userRegister;
-
+   const {error, loading, userInfo} = userRegister;
 
    const submitHandler = (e) => 
    {
@@ -31,9 +30,11 @@ function NewUserScreen() {
       dispatch(register(firstName, lastName, email, password, phoneNumber, 
          accountingManager, admin, projectManager, secretary) )
    }
+
    return (
       <FormContainer>
          {error && <Message variant="danger">{error}</Message>}
+         {userInfo && <Message variant="success">User has been added successfully</Message>}
          {loading && <Loader />}
          <h1 className="font--light text-center">NEW USER</h1>
          <Form onSubmit={submitHandler}>

@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
-import 'firebase/firestore'; // If using Firebase database
-import 'firebase/storage';  // If using Firebase storage
+import 'firebase/firestore'; 
 import 'firebase/auth';
 
 var config = {

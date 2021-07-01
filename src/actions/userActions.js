@@ -23,7 +23,13 @@ export const login = (email, password) => async (dispatch) => {
          type: USER_LOGIN_REQUEST,
       });
       
-      const data = await auth.signInWithEmailAndPassword(email, password);
+      // Login user
+      const authData = await auth.signInWithEmailAndPassword(email, password);
+
+      // grab and assign added user
+      const docRef = firebase.collection("users").doc(authData.user.uid)
+      const doc = await docRef.get();
+      const data = doc.data();
 
       dispatch({
          type: USER_LOGIN_SUCCESS,
@@ -107,6 +113,7 @@ export const register = (first_name, last_name, email, password, phone_number,
       const authData = await auth.createUserWithEmailAndPassword(email, password);
       
       var user = {
+         uid: authData.user.uid,
          first_name: first_name,
          last_name: last_name,
          phone_number: phone_number,
@@ -114,26 +121,21 @@ export const register = (first_name, last_name, email, password, phone_number,
          is_admin: is_admin,
          is_projecManager: is_projecManager,
          is_secretary: is_secretary,
-         uid: authData.user.uid,
          email: authData.user.email
       }
       
+      // Add user details
+      await firebase.collection("users").doc(authData.user.uid).set(user);
       
-      const docRef = await firebase.collection("users").add(user);
+      // grab and assign added user
+      const docRef = firebase.collection("users").doc(authData.user.uid)
       const doc = await docRef.get();
       const data = doc.data();
+
       dispatch({
          type: USER_REGISTER_SUCCESS,
          payload: data,
       });
-
-      
-      dispatch({
-         type: USER_LOGIN_SUCCESS,
-         payload: data,
-      });
-
-      localStorage.setItem("userInfo", JSON.stringify(data));
    } catch (error) {
       dispatch({
          type: USER_REGISTER_FAILED,
