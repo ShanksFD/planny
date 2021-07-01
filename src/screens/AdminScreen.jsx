@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {Container, Col, Row, Button, Form, FormControl} from 'react-bootstrap'
+import React, {useEffect, useState} from 'react'
+import { Col, Row, Button, Form, FormControl, Table} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -7,9 +7,16 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import {listUsers} from "../actions/userActions"
+import {ADMINISTRATOR_PERM, SECRETARY_PERM, DIRECTOR_PERM, ACCOUNTING_MANGER_PERM, PROJECT_MANAGER_PERM} from '../utils'
 
 function AdminScreen({history}) {
+   const [counter, setCounter] = useState(0);
+
+   const incrementCounter = () => {setCounter(counter + 1)}
+   // const decrementCounter = () => {setCounter(counter - 1)}
+
    const { loading, error, userInfo } = useSelector(state => state.userLogin);
+   const { users } = useSelector(state => state.usersList);
 
    const dispatch = useDispatch()
 
@@ -20,9 +27,10 @@ function AdminScreen({history}) {
       }
    }, [history, userInfo, dispatch])
 
+   
    return (
-      <Container>
-         <Row>
+      <>
+          <Row>
             <Col lg={10}>
                <h4>Select user to change</h4>
             </Col>
@@ -45,6 +53,39 @@ function AdminScreen({history}) {
             </Row>
          </Form>
 
+         <Table striped bordered hover variant="dark" className="mt-5">
+            <thead>
+               <tr>
+                  <th>#</th>
+                  <th>Email Address</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Departement</th>
+                  <th>Operation</th>
+               </tr>
+            </thead>
+            <tbody>
+               {users.map((user) => (
+                  <tr key={user.uid}>
+                     <td>{counter}</td>
+                     <td>{user.first_name}</td>
+                     <td>{user.last_name}</td>
+                     <td>{( user.is_admin ? ADMINISTRATOR_PERM
+                        : user.is_director ? DIRECTOR_PERM
+                        : user.is_accountingManager ? ACCOUNTING_MANGER_PERM
+                        : user.is_projectManager ? PROJECT_MANAGER_PERM
+                        : user.is_secretary ? SECRETARY_PERM
+                        : "Root")}</td>
+                     <td>
+                        <LinkContainer to="/">Edit</LinkContainer>
+                        <LinkContainer to="/">Delete</LinkContainer>
+                     </td>
+                     {/* Increment list count by 1 */}
+                     {incrementCounter()}
+                  </tr>
+               ))}
+            </tbody>
+         </Table>
 
          {loading ? (
             <Loader />
@@ -55,7 +96,7 @@ function AdminScreen({history}) {
             <>
             </>
          )}
-      </Container>
+      </>
    )
 }
 

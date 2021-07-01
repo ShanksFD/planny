@@ -5,7 +5,7 @@ import { userLoginReducer, userListReducer, userRegisterReducer } from "./reduce
 
 const reducer = combineReducers({
    userLogin: userLoginReducer,
-   userList: userListReducer,
+   usersList: userListReducer,
    userRegister: userRegisterReducer,
 });
 
