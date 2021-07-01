@@ -3,7 +3,7 @@ import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux"
 
 // Local Imports
-import FormContainer from '../components/formContainer';
+import FormContainer from '../components/FormContainer';
 import {register} from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -15,6 +15,7 @@ function NewUserScreen() {
    const [phoneNumber, setPhoneNumber] = useState("");
    const [password, setPassword] = useState("");
    const [admin, setAdmin] = useState(false);
+   const [director, setDirector] = useState(false);
    const [projectManager, setProjectManager] = useState(false);
    const [secretary, setSecretary] = useState(false);
    const [accountingManager, setAccountingManager] = useState(false);
@@ -28,7 +29,7 @@ function NewUserScreen() {
    {
       e.preventDefault();
       dispatch(register(firstName, lastName, email, password, phoneNumber, 
-         accountingManager, admin, projectManager, secretary) )
+         admin, director, projectManager, accountingManager, secretary))
    }
 
    return (
@@ -99,12 +100,22 @@ function NewUserScreen() {
                   <Col sm={10}>
                   <Form.Check
                      type="radio"
+                     label="Administrator"
+                     name="userTypeRadios"
+                     id="administrator"
+
+                     value={admin} onChange={ () => {
+                        setAdmin(!admin);
+                     }}
+                  />
+                  <Form.Check
+                     type="radio"
                      label="Director"
                      name="userTypeRadios"
                      id="director"
 
-                     value={admin} onChange={ () => {
-                        setAdmin(!admin);
+                     value={director} onChange={ () => {
+                        setDirector(!director);
                      }}
                   />
                   <Form.Check

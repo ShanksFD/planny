@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button, Col, Row } from "react-bootstrap";
 
 // Local Imports
-import FormContainer from '../components/formContainer';
+import FormContainer from '../components/FormContainer';
 import ProjectSteps from '../components/projectSteps';
 
 function NewPhaseScreen({history}) {

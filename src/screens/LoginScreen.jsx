@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 // Local Imports
-import FormContainer from '../components/formContainer';
+import FormContainer from '../components/FormContainer';
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { login } from "../actions/userActions";

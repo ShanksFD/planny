@@ -1,16 +1,17 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 
 // Local Imports
 import LoginScreen from './LoginScreen'
-import AdminScreen from './AdminScreen';
-import { isLogin } from '../utils'
+import { isLogin, currentPerm } from '../utils'
+import Dashboard from '../components/Dashboard'
 
 function HomeScreen() {
 
-   const { userInfo } = useSelector(state => state.userLogin);
    return (
       <div>
+         {!isLogin() && <LoginScreen />}
+
+         <Dashboard perm={currentPerm}/>
       </div>
    )
 }

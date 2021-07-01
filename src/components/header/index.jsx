@@ -19,7 +19,6 @@ function Header() {
       dispatch(logout());
    }
 
-   console.log(userPerm)
    return (
       <header>
          <Navbar variant="dark" className="bg-primary m-auto" expand="lg" collapseOnSelect>
@@ -41,7 +40,7 @@ function Header() {
                            </Navbar.Text>
                            
                            <LinkContainer to="/">
-                              <Nav.Link onClick={logoutHandler} className="text-white mx-1 ">LOGOUT</Nav.Link>
+                              <Nav.Link onClick={logoutHandler} className="text-white mx-1 ">LOG OUT</Nav.Link>
                            </LinkContainer>
                    </Nav>
                   </Navbar.Collapse>

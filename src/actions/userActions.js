@@ -104,7 +104,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 };
 
 export const register = (first_name, last_name, email, password, phone_number, 
-                           is_accountingManager, is_admin, is_projectManager, is_secretary) => async (dispatch) => {
+                        admin, director, projectManager, accountingManager, secretary) => async (dispatch) => {
    try {
       dispatch({
          type: USER_REGISTER_REQUEST,
@@ -117,10 +117,11 @@ export const register = (first_name, last_name, email, password, phone_number,
          first_name: first_name,
          last_name: last_name,
          phone_number: phone_number,
-         is_accountingManager: is_accountingManager,
-         is_admin: is_admin,
-         is_projectManager: is_projectManager,
-         is_secretary: is_secretary,
+         is_admin: admin,
+         is_director: director,
+         is_accountingManager: accountingManager,
+         is_projectManager: projectManager,
+         is_secretary: secretary,
          email: authData.user.email
       }
       
