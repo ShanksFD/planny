@@ -6,6 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 // Local Imports
 import './Header.css'
 import { logout } from "../../actions/userActions";
+import {userPerm} from '../../utils'
 
 function Header() {
    const { userInfo } = useSelector(state => state.userLogin);
@@ -17,6 +18,8 @@ function Header() {
       e.preventDefault();
       dispatch(logout());
    }
+
+   console.log(userPerm)
    return (
       <header>
          <Navbar variant="dark" className="bg-primary m-auto" expand="lg" collapseOnSelect>
@@ -29,16 +32,12 @@ function Header() {
                {userInfo && 
                <>
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                  <Navbar.Collapse id="responsive-navbar-nav">
-                     <Nav className="justify-content-end">
+                  <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                     <Nav>
                            <Navbar.Text className="mx-1 text-white">WELCOME, {userInfo.first_name} /</Navbar.Text>
 
                            <Navbar.Text className="mx-1 text-white">
-                              Signed in as: <span className="text-muted">{(userInfo.is_admin ? "Director"
-                                                                        : userInfo.is_accountingManager ? "Accounting Manager" 
-                                                                        : userInfo.is_projectManager ? "Project Manager" 
-                                                                        : userInfo.is_secretary ? "Secretary"
-                                                                        : "Root")} /</span>
+                              Signed in as: <span className="text-muted">{userPerm()} /</span>
                            </Navbar.Text>
                            
                            <LinkContainer to="/">
