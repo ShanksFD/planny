@@ -26,18 +26,28 @@ function Header() {
                      <Navbar.Brand href="/">PLANNY</Navbar.Brand>
                </LinkContainer>
                   
-                  {/* Nav Links */}
-               <Navbar.Toggle aria-controls="basic-navbar-nav" />
-               <Navbar.Collapse id="basic-navbar-nav">
-                  {userInfo && <Nav className="mr-auto">
-                     <LinkContainer to="/">
-                        <Nav.Link>WELCOME, {userInfo.first_name}</Nav.Link>
-                     </LinkContainer>
-                     <LinkContainer to="/">
-                        <Nav.Link onClick={logoutHandler}>LOGOUT</Nav.Link>
-                     </LinkContainer>
-                  </Nav>}
-               </Navbar.Collapse>
+               {userInfo && 
+               <>
+                  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                  <Navbar.Collapse id="responsive-navbar-nav">
+                     <Nav className="justify-content-end">
+                           <Navbar.Text className="mx-1 text-white">WELCOME, {userInfo.first_name} /</Navbar.Text>
+
+                           <Navbar.Text className="mx-1 text-white">
+                              Signed in as: <span className="text-muted">{(userInfo.is_admin ? "Director"
+                                                                        : userInfo.is_accountingManager ? "Accounting Manager" 
+                                                                        : userInfo.is_projectManager ? "Project Manager" 
+                                                                        : userInfo.is_secretary ? "Secretary"
+                                                                        : "Root")} /</span>
+                           </Navbar.Text>
+                           
+                           <LinkContainer to="/">
+                              <Nav.Link onClick={logoutHandler} className="text-white mx-1 ">LOGOUT</Nav.Link>
+                           </LinkContainer>
+                   </Nav>
+                  </Navbar.Collapse>
+               </>
+               }
             </Container>
          </Navbar>
       </header>
