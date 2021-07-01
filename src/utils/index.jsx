@@ -15,6 +15,7 @@ export const userPerm = () => {
    if(isLogin())
    {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      
       return ( userInfo.is_admin ? ADMINISTRATOR_PERM
       : userInfo.is_director ? DIRECTOR_PERM
       : userInfo.is_accountingManager ? ACCOUNTING_MANGER_PERM

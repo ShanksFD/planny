@@ -6,13 +6,13 @@ import { LinkContainer } from "react-router-bootstrap";
 // Local Imports
 import './Header.css'
 import { logout } from "../../actions/userActions";
-import {userPerm} from '../../utils'
+import {ADMINISTRATOR_PERM, SECRETARY_PERM, DIRECTOR_PERM, ACCOUNTING_MANGER_PERM, PROJECT_MANAGER_PERM} from '../../utils'
 
 function Header() {
-   const { userInfo } = useSelector(state => state.userLogin);
-
    const dispatch = useDispatch();
 
+
+   const {userInfo} = useSelector(state => state.userLogin)
    const logoutHandler = e =>
    {
       e.preventDefault();
@@ -36,7 +36,12 @@ function Header() {
                            <Navbar.Text className="mx-1 text-white">WELCOME, {userInfo.first_name} /</Navbar.Text>
 
                            <Navbar.Text className="mx-1 text-white">
-                              Signed in as: <span className="text-muted">{userPerm()} /</span>
+                              Signed in as: <span className="text-muted">{( userInfo.is_admin ? ADMINISTRATOR_PERM
+                                                                           : userInfo.is_director ? DIRECTOR_PERM
+                                                                           : userInfo.is_accountingManager ? ACCOUNTING_MANGER_PERM
+                                                                           : userInfo.is_projectManager ? PROJECT_MANAGER_PERM
+                                                                           : userInfo.is_secretary ? SECRETARY_PERM
+                                                                           : "Root")} /</span>
                            </Navbar.Text>
                            
                            <LinkContainer to="/">
