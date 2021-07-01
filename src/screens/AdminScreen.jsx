@@ -1,20 +1,24 @@
 import React, {useEffect} from 'react'
-import {Container, Table, Col, Row, Button, Form, FormControl} from 'react-bootstrap'
-import {useSelector} from 'react-redux'
+import {Container, Col, Row, Button, Form, FormControl} from 'react-bootstrap'
+import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
 
 // Local imports
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import {listUsers} from "../actions/userActions"
 
 function AdminScreen({history}) {
-   const { userInfo } = useSelector(state => state.userLogin);
+   const { loading, error, userInfo } = useSelector(state => state.userLogin);
+
+   const dispatch = useDispatch()
 
    useEffect(() => {
+      dispatch(listUsers())
       if (! userInfo.is_admin) {
          history.push("/")
       }
-   }, [history, userInfo])
+   }, [history, userInfo, dispatch])
 
    return (
       <Container>
@@ -42,7 +46,7 @@ function AdminScreen({history}) {
          </Form>
 
 
-         {/* {loading ? (
+         {loading ? (
             <Loader />
          ) : error ? (
             <Message variant="danger">{error}</Message> 
@@ -50,7 +54,7 @@ function AdminScreen({history}) {
          (
             <>
             </>
-         )} */}
+         )}
       </Container>
    )
 }

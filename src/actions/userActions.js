@@ -6,9 +6,9 @@ import {
    USER_LOGOUT_SUCCESS,
    USER_LOGOUT_FAILED,
 
-   USER_DETAILS_FAILED,
-   USER_DETAILS_REQUEST,
-   USER_DETAILS_SUCCESS,
+   USER_LIST_FAILED,
+   USER_LIST_REQUEST,
+   USER_LIST_SUCCESS,
 
    USER_REGISTER_FAILED,
    USER_REGISTER_REQUEST,
@@ -27,7 +27,7 @@ export const login = (email, password) => async (dispatch) => {
       const authData = await auth.signInWithEmailAndPassword(email, password);
 
       // grab and assign added user
-      const docRef = firebase.collection("users").doc(authData.user.uid)
+      const docRef = await firebase.collection("users").doc(authData.user.uid)
       const doc = await docRef.get();
       const data = doc.data();
 
@@ -65,36 +65,23 @@ export const logout = () => async (dispatch) => {
    }
 }
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const listUsers = () => async (dispatch) => {
    try {
       dispatch({
-         type: USER_DETAILS_REQUEST,
+         type: USER_LIST_REQUEST,
       });
 
-      const {
-         userLogin: {userInfo},
-      } = getState()
-
-      const data = userInfo;
-      // const config = {
-      //    headers: {
-      //       "Content-type": "application/json",
-      //       Authorization: `Bearer ${userInfo.token}`
-      //    },
-      // };
-      // const { data } = await axios.get(
-      //    `/api/users/${id}`,
-      //    config
-      // );
-
+      const snapshot = await firebase.collection("users").get()
+      const data = snapshot.docs.map(doc => doc.data());
+      
       dispatch({
-         type: USER_DETAILS_SUCCESS,
+         type: USER_LIST_SUCCESS,
          payload: data,
       });
 
    } catch (error) {
       dispatch({
-         type: USER_DETAILS_FAILED,
+         type: USER_LIST_FAILED,
          payload:
             error.response && error.response.data.detail
                ? error.response.data.detail
