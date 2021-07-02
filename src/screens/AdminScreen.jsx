@@ -2,29 +2,34 @@ import React, {useEffect, useState} from 'react'
 import { Col, Row, Button, Form, FormControl, Table} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 // Local imports
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import EditForm from '../components/EditForm';
 import {listUsers} from "../actions/userActions"
 import {ADMINISTRATOR_PERM, SECRETARY_PERM, DIRECTOR_PERM, ACCOUNTING_MANGER_PERM, PROJECT_MANAGER_PERM} from '../utils'
+import Popup from '../components/Popup';
 
 function AdminScreen({history}) {
-   const [counter, setCounter] = useState(0);
-
-   const incrementCounter = () => {setCounter(counter + 1)}
-   // const decrementCounter = () => {setCounter(counter - 1)}
+   // Modals states
+   const [editModalShow, setEditModalShow] = useState(false);
+   const [deleteModalShow, setDeleteModalShow] = useState(false);
 
    const { loading, error, userInfo } = useSelector(state => state.userLogin);
    const { users } = useSelector(state => state.usersList);
 
    const dispatch = useDispatch()
 
+
+
    useEffect(() => {
-      dispatch(listUsers())
       if (! userInfo.is_admin) {
          history.push("/")
       }
+      // List users
+      dispatch(listUsers())
    }, [history, userInfo, dispatch])
 
    
@@ -56,36 +61,56 @@ function AdminScreen({history}) {
          <Table striped bordered hover variant="dark" className="mt-5">
             <thead>
                <tr>
-                  <th>#</th>
-                  <th>Email Address</th>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Email Address</th>
                   <th>Departement</th>
-                  <th>Operation</th>
+                  <th>Action</th>
                </tr>
             </thead>
             <tbody>
                {users.map((user) => (
                   <tr key={user.uid}>
-                     <td>{counter}</td>
                      <td>{user.first_name}</td>
                      <td>{user.last_name}</td>
+                     <td>{user.email}</td>
                      <td>{( user.is_admin ? ADMINISTRATOR_PERM
                         : user.is_director ? DIRECTOR_PERM
                         : user.is_accountingManager ? ACCOUNTING_MANGER_PERM
                         : user.is_projectManager ? PROJECT_MANAGER_PERM
                         : user.is_secretary ? SECRETARY_PERM
                         : "Root")}</td>
-                     <td>
-                        <LinkContainer to="/">Edit</LinkContainer>
-                        <LinkContainer to="/">Delete</LinkContainer>
+                     <td className="text-center">
+                        <Link to="" className="text-white mx-1" onClick={() => setEditModalShow(true)}><i className="fas fa-edit"></i></Link>
+                        <Link to="" className="text-white mx-1" onClick={() => setDeleteModalShow(true)}><i className="fas fa-trash"></i></Link>
                      </td>
-                     {/* Increment list count by 1 */}
-                     {incrementCounter()}
                   </tr>
                ))}
             </tbody>
          </Table>
+      
+         <Popup show={editModalShow} onHide={() => setEditModalShow(false)} title="Edit" 
+            confirmation={true}
+            confirmationTitle="EDIT" 
+            buttonVariant="primary" 
+            onConfirmation={() => {
+               console.log("Edited")
+               setEditModalShow(false)
+            }}>
+               <EditForm/>
+         </Popup>
+
+         <Popup show={deleteModalShow} onHide={() => setDeleteModalShow(false)} title="Confirmation" 
+            confirmation={true}
+            confirmationTitle="DELETE" 
+            buttonVariant="danger" 
+            onConfirmation={() => {
+               console.log("Deleted")
+               setDeleteModalShow(false)
+            }}>
+
+            </Popup>
+         {/* Are you sure you want to delete this user? */}
 
          {loading ? (
             <Loader />

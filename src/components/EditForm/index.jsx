@@ -1,15 +1,7 @@
 import React, {useState} from 'react'
-import { Form, Button, Col, Row, InputGroup, Container } from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux"
-import { LinkContainer } from 'react-router-bootstrap';
+import { Form, InputGroup, Col, Row} from 'react-bootstrap'
 
-// Local Imports
-import FormContainer from '../components/FormContainer';
-import {register} from '../actions/userActions'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-
-function NewUserScreen() {
+function EditForm() {
    const [email, setEmail] = useState("");
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
@@ -21,27 +13,14 @@ function NewUserScreen() {
    const [secretary, setSecretary] = useState(false);
    const [accountingManager, setAccountingManager] = useState(false);
 
-   const dispatch = useDispatch()
-
-   const userRegister = useSelector(state => state.userRegister)
-   const {error, loading, userInfo} = userRegister;
-
-   const submitHandler = (e) => 
-   {
+   const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(register(firstName, lastName, email, password, phoneNumber, 
-         admin, director, projectManager, accountingManager, secretary))
+      console.log("Edited");
    }
 
    return (
-      <Container>
-         <LinkContainer to="/" ><Button >BACK</Button></LinkContainer>
-         <FormContainer>
-            {error && <Message variant="danger">{error}</Message>}
-            {userInfo && <Message variant="success">User has been added successfully</Message>}
-            {loading && <Loader />}
-            <h1 className="font--light text-center">NEW USER</h1>
-            <Form onSubmit={submitHandler}>
+      <>
+         <Form onSubmit={submitHandler}>
                <Row>
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="firstName" className="my-3">
@@ -154,12 +133,9 @@ function NewUserScreen() {
                      </Col>
                   </Form.Group>
                </Row>
-               
-               <Button type="submit" variant="primary">ADD</Button>
             </Form>
-         </FormContainer>
-      </Container>
+      </>
    )
 }
 
-export default NewUserScreen
+export default EditForm
