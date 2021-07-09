@@ -8,6 +8,7 @@ import AdminScreen from "../../screens/AdminScreen"
 
 function Dashboard() {
    const {userInfo} = useSelector(state => state.userLogin)
+
    return (
       <Container>
          {userInfo.is_admin ? <AdminScreen/>

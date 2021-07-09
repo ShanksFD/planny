@@ -3,7 +3,7 @@ import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 
 // Local Imports
 import FormContainer from '../components/FormContainer';
-import ProjectSteps from '../components/projectSteps';
+import ProjectSteps from '../components/ProjectSteps';
 
 function NewClientScreen({history}) {
 

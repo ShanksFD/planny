@@ -12,6 +12,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
+// firebase.firestore().settings({ experimentalForceLongPolling: true });
 
 export const auth = firebase.auth();
 export default firebase.firestore();
