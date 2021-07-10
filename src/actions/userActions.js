@@ -20,7 +20,10 @@ import {
 
    USER_UPDATE_PROFILE_FAILED,
    USER_UPDATE_PROFILE_REQUEST,
-   USER_UPDATE_PROFILE_SUCCESS
+   USER_UPDATE_PROFILE_SUCCESS,
+   USER_DELETE_REQUEST,
+   USER_DELETE_FAILED,
+   USER_DELETE_SUCCESS
 } from "../constants/userConstants";
 
 import firebase, {auth} from "../firebase"
@@ -189,3 +192,28 @@ export const updateUserProfile = (user) => async (dispatch) => {
       });
    }
 };
+
+export const deleteUser = (id) => async (dispatch) => {
+   try
+   {
+      dispatch({
+         type: USER_DELETE_REQUEST,
+         loading: true
+      })
+
+      await firebase.collection("users").doc(id).delete()
+
+      dispatch({
+         type: USER_DELETE_SUCCESS,
+         success: true
+      })
+   } catch(error) {
+      dispatch({
+         type: USER_DELETE_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+}
