@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import { Col, Row, Button, Form, FormControl, Table, InputGroup} from 'react-bootstrap'
+import { Col, Row, Button, Form, Table, InputGroup} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
@@ -105,30 +105,15 @@ function AdminScreen({history}) {
       
    return (
       <>
-          <Row>
-            <Col lg={10}>
-               <h4>Select user to change</h4>
-            </Col>
-            <Col>
-               <LinkContainer to="/user">
+          <Row >
+            <Col  className="py-4">
+               <LinkContainer to="/user" style={{float: "right"}} >
                   <Button>ADD USER</Button>
                </LinkContainer>
             </Col>
          </Row>
 
-
-         <Form>
-            <Row>
-               <Col>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-               </Col>
-               <Col>
-                  <Button>Search</Button>
-               </Col>
-            </Row>
-         </Form>
-
-         <Table striped bordered hover variant="dark" className="mt-5">
+         <Table striped bordered hover responsive variant="dark">
             <thead>
                <tr>
                   <th>First Name</th>

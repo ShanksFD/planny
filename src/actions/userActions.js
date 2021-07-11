@@ -14,6 +14,14 @@ import {
    USER_REGISTER_REQUEST,
    USER_REGISTER_SUCCESS,
 
+   CLIENT_REGISTER_FAILED,
+   CLIENT_REGISTER_REQUEST,
+   CLIENT_REGISTER_SUCCESS,
+
+   PROJECT_REGISTER_FAILED,
+   PROJECT_REGISTER_REQUEST,
+   PROJECT_REGISTER_SUCCESS,
+
    USER_DETAILS_FAILED,
    USER_DETAILS_REQUEST,
    USER_DETAILS_SUCCESS,
@@ -21,12 +29,13 @@ import {
    USER_UPDATE_PROFILE_FAILED,
    USER_UPDATE_PROFILE_REQUEST,
    USER_UPDATE_PROFILE_SUCCESS,
+
    USER_DELETE_REQUEST,
    USER_DELETE_FAILED,
    USER_DELETE_SUCCESS
 } from "../constants/userConstants";
-
-import firebase, {auth} from "../firebase"
+import { v4 as uuidv4 } from 'uuid';
+import firebase, {auth, timeStamp} from "../firebase"
 
 export const login = (email, password) => async (dispatch) => {
    try {
@@ -217,3 +226,73 @@ export const deleteUser = (id) => async (dispatch) => {
       });
    }
 }
+
+export const registerClient = ({first_name, last_name, email, phone_number, website}) => async (dispatch) => {
+   try {
+      dispatch({
+         type: CLIENT_REGISTER_REQUEST,
+      });
+
+      const id = uuidv4();
+
+      var user = {
+         first_name: first_name,
+         last_name: last_name,
+         phone_number: phone_number,
+         email: email,
+         website: website,
+         _id: id
+      }
+      
+      // Add client 
+      await firebase.collection("clients").doc(id).set(user);
+
+      dispatch({
+         type: CLIENT_REGISTER_SUCCESS,
+         payload: id
+      });
+   } catch (error) {
+      dispatch({
+         type: CLIENT_REGISTER_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+};
+
+export const registerProject = ({title, description, start_date, end_date, price, client_id}) => async (dispatch) => {
+   try {
+      dispatch({
+         type: PROJECT_REGISTER_REQUEST,
+      });
+
+      const id = uuidv4();
+
+      console.log()
+      var project = {
+         title: title,
+         description: description,
+         start_date: timeStamp.fromDate(new Date(start_date)),
+         end_date: timeStamp.fromDate(new Date(end_date)),
+         price: price,
+         client_id: client_id
+      }
+      
+      // Add project 
+      await firebase.collection("projects").doc(id).set(project);
+
+      dispatch({
+         type: PROJECT_REGISTER_SUCCESS,
+      });
+   } catch (error) {
+      dispatch({
+         type: PROJECT_REGISTER_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+};

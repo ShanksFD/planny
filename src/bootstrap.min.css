@@ -3027,12 +3027,14 @@
  .btn-primary {
    color: #fff;
    background-color: #1a1a1a;
+   border-width: 2px;
    border-color: #1a1a1a;
+   transition: 300ms ease-in-out;
  }
  
  .btn-primary:hover {
-   color: #fff;
-   background-color: #161616;
+   color: #1a1a1a;
+   background-color: transparent;
    border-color: #151515;
  }
  

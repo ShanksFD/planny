@@ -1,7 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { userLoginReducer, userListReducer, userRegisterReducer, userDetailsReducer, userUpdateReducer, userDeleteReducer } from "./reducers/userReducers";
+import { userLoginReducer, 
+   userListReducer, 
+   userRegisterReducer, 
+   userDetailsReducer, 
+   userUpdateReducer, 
+   userDeleteReducer, 
+   clientRegisterReducer,
+   projectRegisterReducer } from "./reducers/userReducers";
 
 const reducer = combineReducers({
    userLogin: userLoginReducer,
@@ -9,7 +16,9 @@ const reducer = combineReducers({
    userRegister: userRegisterReducer,
    userDetails: userDetailsReducer,
    userUpdateProfile: userUpdateReducer,
-   userDelete: userDeleteReducer
+   userDelete: userDeleteReducer,
+   clientRegister: clientRegisterReducer,
+   projectRegister: projectRegisterReducer
 });
 
 // load data from localStorage

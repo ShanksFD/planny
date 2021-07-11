@@ -15,4 +15,5 @@ firebase.initializeApp(config);
 // firebase.firestore().settings({ experimentalForceLongPolling: true });
 
 export const auth = firebase.auth();
+export const timeStamp = firebase.firestore.Timestamp
 export default firebase.firestore();
