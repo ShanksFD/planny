@@ -24,7 +24,10 @@ import {
 
    USER_DELETE_FAILED,
    USER_DELETE_SUCCESS,
-   USER_DELETE_REQUEST
+   USER_DELETE_REQUEST,
+   USER_MANAGER_LIST_SUCCESS,
+   USER_MANAGER_LIST_FAILED,
+   USER_MANAGER_LIST_REQUEST
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -115,3 +118,15 @@ export const userDeleteReducer = (state = {} , action) => {
    }
 };
 
+export const projectManagerListReducer = (state = {users: []}, action) => {
+   switch (action.type) {
+      case USER_MANAGER_LIST_REQUEST:
+         return { loading: true, users: [] };
+      case USER_MANAGER_LIST_SUCCESS:
+         return { loading: false, users: action.payload };
+      case USER_MANAGER_LIST_FAILED:
+         return { loading: false, error: action.payload };
+      default:
+         return state;
+   }
+};

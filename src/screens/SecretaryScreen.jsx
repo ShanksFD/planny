@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 // Local imports
 import {listProjects} from "../actions/projectActions"
+import { getProjectManagerList } from '../actions/userActions';
 
 function SecretaryScreen() {
 
@@ -13,6 +14,8 @@ function SecretaryScreen() {
    const dispatch = useDispatch()
 
    useEffect(() => {
+      dispatch(getProjectManagerList())
+
       // List projects
       if(projects.length === 0)
          dispatch(listProjects())

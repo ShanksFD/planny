@@ -6,7 +6,8 @@ import { userLoginReducer,
    userRegisterReducer, 
    userDetailsReducer, 
    userUpdateReducer, 
-   userDeleteReducer
+   userDeleteReducer,
+   projectManagerListReducer
    } from "./reducers/userReducers";
 import {projectRegisterReducer, projectListReducer} from "./reducers/projectReducers"
 import {clientRegisterReducer} from "./reducers/clientReducers"
@@ -18,7 +19,10 @@ const reducer = combineReducers({
    userDetails: userDetailsReducer,
    userUpdateProfile: userUpdateReducer,
    userDelete: userDeleteReducer,
+   projectManagerList: projectManagerListReducer,
+
    clientRegister: clientRegisterReducer,
+
    projectRegister: projectRegisterReducer,
    projectsList: projectListReducer
 });
