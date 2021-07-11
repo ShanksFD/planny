@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 
 // Local Imports
 import FormContainer from '../components/FormContainer';
 import ProjectSteps from '../components/ProjectSteps';
-import {registerProject} from "../actions/userActions"
+import {registerProject} from "../actions/projectActions"
 
 function NewProjectScreen({history}) {
    const [title, setTitle] = useState("");
@@ -16,6 +16,7 @@ function NewProjectScreen({history}) {
 
    const dispatch = useDispatch()
    const {clientId} = useSelector(state => state.clientRegister)
+   const projectRegister = useSelector(state => state.projectRegister)
 
    const submitHandler = (e) => {
       e.preventDefault()
@@ -33,6 +34,11 @@ function NewProjectScreen({history}) {
       }
    } 
 
+   useEffect(() => {
+      if(projectRegister && projectRegister.success)
+         history.push("/")
+   }, [projectRegister, history])
+   
    return (
       <FormContainer>
          <ProjectSteps step1 step2/>

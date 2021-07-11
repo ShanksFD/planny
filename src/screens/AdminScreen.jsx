@@ -120,7 +120,7 @@ function AdminScreen({history}) {
                   <th>Last Name</th>
                   <th>Email Address</th>
                   <th>Departement</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                </tr>
             </thead>
             <tbody>

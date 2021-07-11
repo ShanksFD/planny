@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
-import { registerClient } from '../actions/userActions';
 
 
 // Local Imports
+import { registerClient } from '../actions/clientActions';
 import FormContainer from '../components/FormContainer';
 import ProjectSteps from '../components/ProjectSteps';
 

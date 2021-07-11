@@ -14,14 +14,6 @@ import {
    USER_REGISTER_REQUEST,
    USER_REGISTER_SUCCESS,
 
-   CLIENT_REGISTER_FAILED,
-   CLIENT_REGISTER_REQUEST,
-   CLIENT_REGISTER_SUCCESS,
-
-   PROJECT_REGISTER_FAILED,
-   PROJECT_REGISTER_REQUEST,
-   PROJECT_REGISTER_SUCCESS,
-
    USER_DETAILS_FAILED,
    USER_DETAILS_REQUEST,
    USER_DETAILS_SUCCESS,
@@ -123,28 +115,3 @@ export const userDeleteReducer = (state = {} , action) => {
    }
 };
 
-export const clientRegisterReducer = (state = {} , action) => {
-   switch (action.type) {
-      case CLIENT_REGISTER_REQUEST:
-         return { loading: true};
-      case CLIENT_REGISTER_SUCCESS:
-         return { loading: false, clientId: action.payload };
-      case CLIENT_REGISTER_FAILED:
-         return { loading: false, error: action.payload };
-      default:
-         return state;
-   }
-};
-
-export const projectRegisterReducer = (state = {} , action) => {
-   switch (action.type) {
-      case PROJECT_REGISTER_REQUEST:
-         return { loading: true };
-      case PROJECT_REGISTER_SUCCESS:
-         return { loading: false };
-      case PROJECT_REGISTER_FAILED:
-         return { loading: false, error: action.payload };
-      default:
-         return state;
-   }
-};
