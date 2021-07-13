@@ -4,6 +4,8 @@ import {Container} from 'react-bootstrap'
 
 // Local Imports
 import AdminScreen from "../../screens/AdminScreen"
+import SecretaryScreen from "../../screens/SecretaryScreen"
+import DirectorScreen from '../../screens/DirectorScreen'
 
 
 function Dashboard() {
@@ -12,10 +14,10 @@ function Dashboard() {
    return (
       <Container>
          {userInfo.is_admin ? <AdminScreen/>
-         : userInfo.is_director ? "Director Dashboard"
+         : userInfo.is_director ? <DirectorScreen/>
          : userInfo.is_projectManager ? "Project Manager Dashboard"
          : userInfo.is_accountingManager ? "Accounting Dashboard"
-         : userInfo.is_secretary ? "Secretary Dashboard"
+         : userInfo.is_secretary ? <SecretaryScreen/>
          : ""}
       </Container>
    )

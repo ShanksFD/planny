@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import { Col, Row, Button, Form, FormControl, Table, InputGroup} from 'react-bootstrap'
+import React, {useEffect, useRef, useState} from 'react'
+import { Col, Row, Button, Form, Table, InputGroup} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { useHistory as history } from 'react-router';
 
 // Local imports
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import {listUsers, getUserDetails, updateUserProfile} from "../actions/userActions"
+import {listUsers, getUserDetails, updateUserProfile, deleteUser} from "../actions/userActions"
 import {ADMINISTRATOR_PERM, SECRETARY_PERM, DIRECTOR_PERM, ACCOUNTING_MANGER_PERM, PROJECT_MANAGER_PERM} from '../utils'
 import Popup from '../components/Popup';
 
-function AdminScreen({history}) {
+function AdminScreen() {
    // Modals states
    const [firstName, setFirstName] = useState ("");
    const [lastName, setLastName] = useState("");
@@ -34,6 +34,8 @@ function AdminScreen({history}) {
    const userUpdateProfle = useSelector((state) => state.userUpdateProfile);
    const userDetails = useSelector(state => state.userDetails)
    
+   const deletedUser = useSelector(state => state.userDelete)
+
    const editHandler = () => {
       dispatch(updateUserProfile(
          {
@@ -62,6 +64,7 @@ function AdminScreen({history}) {
       setSecretary(user.is_secretary)
       setAccountingManager(user.is_accountingManager)
    }
+   var isDeleted = useRef(false);;
 
    useEffect(() => {
       if (! userInfo.is_admin) {
@@ -84,47 +87,40 @@ function AdminScreen({history}) {
          initForms(userDetails.user)
       }
 
-   }, [history, userInfo, dispatch, 
+      if(deletedUser && deletedUser.success && !isDeleted.current)
+      {
+         dispatch(listUsers())
+         isDeleted.current = true
+      }
+      
+   }, [
+      userInfo, dispatch, 
       userDetails.success, 
       users.length, 
       userDetails.user,
-      userUpdateProfle.success
+      userUpdateProfle.success,
+      deletedUser
    ])
 
       
    return (
       <>
-          <Row>
-            <Col lg={10}>
-               <h4>Select user to change</h4>
-            </Col>
-            <Col>
-               <LinkContainer to="/user">
+          <Row >
+            <Col  className="py-4">
+               <LinkContainer to="/user" style={{float: "right"}} >
                   <Button>ADD USER</Button>
                </LinkContainer>
             </Col>
          </Row>
 
-
-         <Form>
-            <Row>
-               <Col>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-               </Col>
-               <Col>
-                  <Button>Search</Button>
-               </Col>
-            </Row>
-         </Form>
-
-         <Table striped bordered hover variant="dark" className="mt-5">
+         <Table striped bordered hover responsive variant="dark">
             <thead>
                <tr>
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email Address</th>
                   <th>Departement</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                </tr>
             </thead>
             <tbody>
@@ -144,7 +140,10 @@ function AdminScreen({history}) {
                            dispatch(getUserDetails(e.target.getAttribute("data-id")))
                            setEditModalShow(true)
                         }}><i className="fas fa-edit" data-id={u.uid}></i></Link>
-                        <Link to="" className="text-white mx-1" onClick={() => setDeleteModalShow(true)}><i className="fas fa-trash"></i></Link>
+                        <Link to="" className="text-white mx-1" onClick={(e) => {
+                           dispatch(getUserDetails(e.target.getAttribute("data-id")))
+                           setDeleteModalShow(true)
+                        }}><i className="fas fa-trash" data-id={u.uid}></i></Link>
                      </td>
                   </tr>
                ))}
@@ -158,7 +157,7 @@ function AdminScreen({history}) {
             buttonVariant="primary" 
             onConfirmation={editHandler}>
                {(userUpdateProfle.success && <Message variant="info">{updateMessage}</Message> ) ||
-               (userUpdateProfle.error && <Message variant="info">{updateMessage}</Message>) }
+               (userUpdateProfle.error && <Message variant="danger">{userUpdateProfle.error}</Message>) }
 
                {userDetails.loading ? <Loader/> 
                : userDetails.error ? <Message variant="danger">{userDetails.error}</Message>
@@ -268,7 +267,8 @@ function AdminScreen({history}) {
             confirmationTitle="DELETE" 
             buttonVariant="danger" 
             onConfirmation={() => {
-               console.log("Deleted")
+               dispatch(deleteUser(uid))
+
                setDeleteModalShow(false)
             }}>
                <p>Are you sure you want to delete this user?</p>

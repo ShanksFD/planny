@@ -20,9 +20,16 @@ import {
 
    USER_UPDATE_PROFILE_FAILED,
    USER_UPDATE_PROFILE_REQUEST,
-   USER_UPDATE_PROFILE_SUCCESS
-} from "../constants/userConstants";
+   USER_UPDATE_PROFILE_SUCCESS,
 
+   USER_DELETE_REQUEST,
+   USER_DELETE_FAILED,
+   USER_DELETE_SUCCESS,
+
+   USER_MANAGER_LIST_REQUEST,
+   USER_MANAGER_LIST_FAILED,
+   USER_MANAGER_LIST_SUCCESS
+} from "../constants/userConstants";
 import firebase, {auth} from "../firebase"
 
 export const login = (email, password) => async (dispatch) => {
@@ -186,6 +193,53 @@ export const updateUserProfile = (user) => async (dispatch) => {
             error.response && error.response.data.detail
                ? error.response.data.detail
                : error.message,
+      });
+   }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+   try
+   {
+      dispatch({
+         type: USER_DELETE_REQUEST,
+         loading: true
+      })
+
+      await firebase.collection("users").doc(id).delete()
+
+      dispatch({
+         type: USER_DELETE_SUCCESS,
+         success: true
+      })
+   } catch(error) {
+      dispatch({
+         type: USER_DELETE_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+}
+
+export const getProjectManagerList = () => async (dispatch) => {
+   try {
+      dispatch({
+         type: USER_MANAGER_LIST_REQUEST,
+      });
+
+      const snapshot = await firebase.collection("users").where("is_projectManager", "==", true).get()
+      const data = snapshot.docs.map(doc => doc.data());
+
+      dispatch({
+         type: USER_MANAGER_LIST_SUCCESS,
+         payload: data
+      });
+
+   } catch (error) {
+      dispatch({
+         type: USER_MANAGER_LIST_FAILED,
+         payload: error.message,
       });
    }
 };
