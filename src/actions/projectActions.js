@@ -13,7 +13,10 @@ import {
 
    PROJECT_DETAILS_REQUEST,
    PROJECT_DETAILS_FAILED,
-   PROJECT_DETAILS_SUCCESS
+   PROJECT_DETAILS_SUCCESS,
+   PROJECT_DELETE_REQUEST,
+   PROJECT_DELETE_SUCCESS,
+   PROJECT_DELETE_FAILED
 } from "../constants/projectConstants";
 import firebase, {timeStamp} from "../firebase"
 import { v4 as uuidv4 } from 'uuid';
@@ -169,3 +172,30 @@ export const getProjectDetails = (id) => async (dispatch) => {
       });
    }
 };
+
+export const deleteProject = (projectId, clientId) => async (dispatch) => {
+   try
+   {
+      dispatch({
+         type: PROJECT_DELETE_REQUEST,
+         loading: true
+      })
+
+      await firebase.collection("projects").doc(projectId).delete()
+      await firebase.collection("clients").doc(clientId).delete()
+
+      dispatch({
+         type: PROJECT_DELETE_SUCCESS,
+         success: true
+      })
+      dispatch(listProjects())
+   } catch(error) {
+      dispatch({
+         type: PROJECT_DELETE_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+}

@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
 // Local imports
-import {getProjectDetails, listProjects} from "../actions/projectActions"
+import {getProjectDetails, listProjects, deleteProject} from "../actions/projectActions"
 import Popup from '../components/Popup';
 import {updateProject} from "../actions/projectActions"
 import Message from '../components/Message';
@@ -34,10 +34,26 @@ function SecretaryScreen() {
    const clientsRef = useRef(null)
    clientsRef.current = clients
 
+   // UseRef to prevent upcoming renders
+   const managersList = useSelector(state => state.projectManagerList)
+   const managersListRef = useRef(null)
+   managersListRef.current = managersList.users
+
    const projectDetails = useSelector(state => state.projectDetails)
    const projectUpdate = useSelector(state => state.projectUpdate)
-   const projectManagerList = useSelector(state => state.projectManagerList)
 
+   const getProjectManagerName = (id) => {
+      var name = "NA"
+      for(let i = 0; i < managersListRef.current.length; i++)
+      {
+         if(managersListRef.current[i].uid === id)
+         {
+            name = managersListRef.current[i].first_name + " " + managersListRef.current[i].last_name
+            break;
+         }
+      }
+      return name
+   };
 
    const getClientName = useCallback((id) =>
    {
@@ -63,8 +79,8 @@ function SecretaryScreen() {
       setDescription(project.description);
       setStartDate(project.start_date)
       setEndDate(project.end_date)
-      setClientFName(getClientName(project.client_id).first_name || "NA")
-      setClientLName(getClientName(project.client_id).last_name || "NA")
+      setClientFName(getClientName(project.client_id).first_name)
+      setClientLName(getClientName(project.client_id).last_name)
 
       setProjectId(project._id)
       setClientId(project.client_id)
@@ -91,7 +107,9 @@ function SecretaryScreen() {
    useEffect(() => {
       // List projects
       dispatch(listProjects())
+      dispatch(getProjectManagerList())
    }, [dispatch])
+
 
    const isDetailsDeployed = useRef(false)
    useEffect(() => {
@@ -146,6 +164,7 @@ function SecretaryScreen() {
                   <th>End date</th>
                   <th>Price</th>
                   <th>Client</th>
+                  <th>Manager</th>
                   <th>Actions</th>
                </tr>
             </thead>
@@ -157,12 +176,16 @@ function SecretaryScreen() {
                      <td>{p.end_date.toDateString()}</td>
                      <td>{p.price}</td>
                      <td>{getClientName(p.client_id).full_name}</td>
+                     <td>{getProjectManagerName(p.manager_id)}</td>
                      <td className="text-center">
                         <Link to="" className="text-white mx-1"><i className="fas fa-edit" onClick={(e) => {
                            dispatch(getProjectDetails(e.target.getAttribute("data-id")))
                            setEditModalShow(true)
                         }} data-id={p._id}></i></Link>
-                        <Link to="" className="text-white mx-1"><i className="fas fa-trash" data-id={p._id}></i></Link>
+                        <Link to="" className="text-white mx-1" onClick={e => {
+                           dispatch(getProjectDetails(e.target.getAttribute("data-id")))
+                           setDeleteModalShow(true)
+                        }}><i className="fas fa-trash" data-id={p._id}></i></Link>
                      </td>
                   </tr>
                ))}
@@ -250,6 +273,18 @@ function SecretaryScreen() {
                </Row>
             </Form>   
             )}
+         </Popup>
+
+         {/* Delete Popup */}
+         <Popup show={deleteModalShow} onHide={() => setDeleteModalShow(false)} title="Confirmation" 
+            confirmation={true}
+            confirmationTitle="DELETE" 
+            buttonVariant="danger" 
+            onConfirmation={() => {
+               dispatch(deleteProject(projectId, clientId))
+               setDeleteModalShow(false)
+            }}>
+               <p>Are you sure you want to delete this user?</p>
          </Popup>
       </>
    )
