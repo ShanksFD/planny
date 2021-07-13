@@ -114,12 +114,10 @@ function SecretaryScreen() {
    // init history
    const history = useHistory()
 
-   const isDetailsDeployed = useRef(false)
    useEffect(() => {
-      if(projectDetails.success && !isDetailsDeployed.current)
+      if(projectDetails.success)
       {
          initForms(projectDetails.project)
-         isDetailsDeployed.current = true
       }
 
       if(projectUpdate.success)
@@ -217,7 +215,7 @@ function SecretaryScreen() {
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="client_fname" className="my-3">
                         <Form.Label>FIRST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter first name" value={clientFName} onChange={ e => {
+                        <Form.Control type="text" placeholder="Enter first name" value={clientFName || ""} onChange={ e => {
                            setClientFName(e.target.value);
                         }}/>
                      </Form.Group>
@@ -226,7 +224,7 @@ function SecretaryScreen() {
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="client" className="my-3">
                         <Form.Label>LAST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter last name" value={clientLName} onChange={ e => {
+                        <Form.Control type="text" placeholder="Enter last name" value={clientLName || ""} onChange={ e => {
                            setClientLName(e.target.value);
                         }}/>
                      </Form.Group>
@@ -246,7 +244,7 @@ function SecretaryScreen() {
                <Row>
                   <Form.Group controlId="description" className="my-3">
                      <Form.Label>DESCRIPTION</Form.Label>
-                     <Form.Control as="textarea" rows={3} placeholder="Project description" value={description} 
+                     <Form.Control as="textarea" rows={3} placeholder="Project description" value={description || ""} 
                         onChange={((e) => {
                            setDescription(e.target.value)
                         })}/>
@@ -257,7 +255,7 @@ function SecretaryScreen() {
                <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="startDate" className="my-3">
                         <Form.Label>START DATE</Form.Label>
-                        <Form.Control type="date" value={startDate} onChange={((e) => {
+                        <Form.Control type="date" value={startDate || ""} onChange={((e) => {
                            setStartDate(e.target.value)
                         })}/>
                      </Form.Group>
@@ -266,7 +264,7 @@ function SecretaryScreen() {
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="endDate" className="my-3">
                         <Form.Label>END DATE</Form.Label>
-                        <Form.Control type="date" value={endDate} onChange={((e) => {
+                        <Form.Control type="date" value={endDate || ""} onChange={((e) => {
                            setEndDate(e.target.value)
                         })}/>
                      </Form.Group>
