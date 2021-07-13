@@ -28,7 +28,7 @@ function App() {
         <Route path="/" component={HomeScreen} exact /> 
 
         <PrivateRoute path={LINK_NEW_USER} component={NewUserScreen} permName={ADMINISTRATOR_PERM} exact/> 
-        <PrivateRoute path={LINK_NEW_CLIENT} component={NewClientScreen} permName={SECRETARY_PERM} exact/> 
+        <Route path={LINK_NEW_CLIENT} component={NewClientScreen} permName={SECRETARY_PERM} exact/> 
         <PrivateRoute path={LINK_NEW_PHASE} component={NewPhaseScreen} permName={SECRETARY_PERM} exact/> 
         <PrivateRoute path={LINK_NEW_PROJECT} component={NewProjectScreen} permName={SECRETARY_PERM} exact/> 
       </main>

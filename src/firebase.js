@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore'; 
 import 'firebase/auth';
+import 'firebase/storage';
 
 var config = {
    apiKey: "AIzaSyCjG07Ox1WQ4QUohYRiHhE-F7Cm41HUlUE",
@@ -15,5 +16,6 @@ firebase.initializeApp(config);
 // firebase.firestore().settings({ experimentalForceLongPolling: true });
 
 export const auth = firebase.auth();
-export const timeStamp = firebase.firestore.Timestamp
+export const timeStamp = firebase.firestore.Timestamp;
+export const storage = firebase.storage();
 export default firebase.firestore();

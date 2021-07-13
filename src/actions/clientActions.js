@@ -32,7 +32,7 @@ export const registerClient = ({first_name, last_name, email, phone_number, webs
 
       dispatch({
          type: CLIENT_REGISTER_SUCCESS,
-         payload: id
+         payload: id,
       });
 
    } catch (error) {

@@ -18,10 +18,10 @@ import {
    PROJECT_DELETE_SUCCESS,
    PROJECT_DELETE_FAILED
 } from "../constants/projectConstants";
-import firebase, {timeStamp} from "../firebase"
+import firebase, {timeStamp, storage} from "../firebase"
 import { v4 as uuidv4 } from 'uuid';
 
-export const registerProject = ({title, description, start_date, end_date, price, client_id, manager_id}) => async (dispatch) => {
+export const registerProject = ({title, description, start_date, end_date, price, client_id, manager_id, files}) => async (dispatch) => {
    try {
       dispatch({
          type: PROJECT_REGISTER_REQUEST,
@@ -39,6 +39,15 @@ export const registerProject = ({title, description, start_date, end_date, price
          _id: id,
          manager_id: manager_id
       }
+
+      const storageRef = storage.ref()
+      for(let i = 0; i < files.length ; i++)
+      {
+         console.log(files[i].name)
+         const fileRef = storageRef.child(`project_${id}/${files[i].name}.txt`)
+         await fileRef.put(files[i])  
+      }
+      
       
       // Add project 
       await firebase.collection("projects").doc(id).set(project);

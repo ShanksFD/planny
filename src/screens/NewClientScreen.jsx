@@ -41,7 +41,7 @@ function NewClientScreen({history}) {
                <Col lg={6} md={6} sm={12}>
                   <Form.Group controlId="firstName" className="my-3">
                      <Form.Label>FIRST NAME</Form.Label>
-                     <Form.Control type="text" placeholder="Enter first name" value={firstName} onChange={(e) => {
+                     <Form.Control required type="text" placeholder="Enter first name" value={firstName} onChange={(e) => {
                         setFirstName(e.target.value)
                         }}/>
                   </Form.Group>
@@ -50,7 +50,7 @@ function NewClientScreen({history}) {
                <Col lg={6} md={6} sm={12}>
                   <Form.Group controlId="lastName" className="my-3">
                      <Form.Label>LAST NAME</Form.Label>
-                     <Form.Control type="text" placeholder="Enter last name" value={lastName} onChange={(e) => {
+                     <Form.Control required type="text" placeholder="Enter last name" value={lastName} onChange={(e) => {
                         setLastName(e.target.value)
                         }}/>
                   </Form.Group>
@@ -60,7 +60,7 @@ function NewClientScreen({history}) {
             <Row>
                <Form.Group controlId="email" className="my-3">
                   <Form.Label>EMAIL ADDRESS</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => {
+                  <Form.Control required type="email" placeholder="Enter email" value={email} onChange={(e) => {
                         setEmail(e.target.value)
                         }}/>
                </Form.Group>
@@ -69,7 +69,7 @@ function NewClientScreen({history}) {
             <Row>
                <Form.Group controlId="website" className="my-3">
                   <Form.Label>WEBSITE</Form.Label>
-                  <Form.Control type="text" placeholder="Enter website url" value={website} onChange={(e) => {
+                  <Form.Control required type="text" placeholder="Enter website url" value={website} onChange={(e) => {
                         setWebsite(e.target.value)
                         }}/>
                </Form.Group>
@@ -82,7 +82,7 @@ function NewClientScreen({history}) {
                      <InputGroup.Prepend>
                         <InputGroup.Text>+212</InputGroup.Text>
                      </InputGroup.Prepend>
-                     <Form.Control type="text" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => {
+                     <Form.Control required type="text" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => {
                         setPhoneNumber(e.target.value)
                         }}/>
                      </InputGroup>

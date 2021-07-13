@@ -1,9 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { Col, Row, Button, Form, Table, InputGroup} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
-import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
-import { useHistory as history } from 'react-router';
+import { useHistory } from 'react-router';
 
 // Local imports
 import Loader from '../components/Loader';
@@ -35,6 +34,9 @@ function AdminScreen() {
    const userDetails = useSelector(state => state.userDetails)
    
    const deletedUser = useSelector(state => state.userDelete)
+
+   // init history
+   const history = useHistory();
 
    const editHandler = () => {
       dispatch(updateUserProfile(
@@ -99,7 +101,8 @@ function AdminScreen() {
       users.length, 
       userDetails.user,
       userUpdateProfle.success,
-      deletedUser
+      deletedUser,
+      history
    ])
 
       
@@ -107,9 +110,9 @@ function AdminScreen() {
       <>
           <Row >
             <Col  className="py-4">
-               <LinkContainer to="/user" style={{float: "right"}} >
-                  <Button>ADD USER</Button>
-               </LinkContainer>
+               <div style={{float: "right"}} >
+                  <Button onClick={() => history.push("/user")}>ADD USER</Button>
+               </div>
             </Col>
          </Row>
 

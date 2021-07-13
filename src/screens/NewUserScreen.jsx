@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Form, Button, Col, Row, InputGroup, Container } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux"
 import { LinkContainer } from 'react-router-bootstrap';
@@ -9,7 +9,7 @@ import {register} from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
-function NewUserScreen() {
+function NewUserScreen({history}) {
    const [email, setEmail] = useState("");
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
@@ -33,6 +33,11 @@ function NewUserScreen() {
          admin, director, projectManager, accountingManager, secretary))
    }
 
+   useEffect(() => {
+      if(userRegister.success)
+         history.push("/project")
+   }, [history, userRegister])
+
    return (
       <Container>
          <LinkContainer to="/" ><Button >BACK</Button></LinkContainer>
@@ -46,7 +51,7 @@ function NewUserScreen() {
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="firstName" className="my-3">
                         <Form.Label>FIRST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter first name" value={firstName} onChange={ e => {
+                        <Form.Control required type="text" placeholder="Enter first name" value={firstName} onChange={ e => {
                            setFirstName(e.target.value);
                         }}/>
                      </Form.Group>
@@ -55,7 +60,7 @@ function NewUserScreen() {
                   <Col lg={6} md={6} sm={12}>
                      <Form.Group controlId="lastName" className="my-3">
                         <Form.Label>LAST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter last name" value={lastName} onChange={ e => {
+                        <Form.Control required type="text" placeholder="Enter last name" value={lastName} onChange={ e => {
                            setLastName(e.target.value);
                         }}/>
                      </Form.Group>
@@ -65,7 +70,7 @@ function NewUserScreen() {
                <Row>
                   <Form.Group controlId="email" className="my-3">
                      <Form.Label>EMAIL ADDRESS</Form.Label>
-                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={ e => {
+                     <Form.Control required type="email" placeholder="Enter email" value={email} onChange={ e => {
                            setEmail(e.target.value);
                         }}/>
                   </Form.Group>
@@ -74,7 +79,7 @@ function NewUserScreen() {
                <Row>
                   <Form.Group controlId="password" className="my-3">
                      <Form.Label>PASSWORD</Form.Label>
-                     <Form.Control type="password" placeholder="Enter password" value={password} onChange={ e => {
+                     <Form.Control required type="password" placeholder="Enter password" value={password} onChange={ e => {
                            setPassword(e.target.value);
                         }}/>
                   </Form.Group>
@@ -87,7 +92,7 @@ function NewUserScreen() {
                         <InputGroup.Prepend>
                            <InputGroup.Text>+212</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <Form.Control type="text" placeholder="Enter phone number" value={phoneNumber} onChange={ e => {
+                        <Form.Control required type="text" placeholder="Enter phone number" value={phoneNumber} onChange={ e => {
                            setPhoneNumber(e.target.value);
                         }}/>
                         </InputGroup>

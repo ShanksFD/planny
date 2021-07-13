@@ -13,7 +13,7 @@ export const clientRegisterReducer = (state = {} , action) => {
       case CLIENT_REGISTER_REQUEST:
          return { loading: true};
       case CLIENT_REGISTER_SUCCESS:
-         return { loading: false, clientId: action.payload };
+         return { loading: false, clientId: action.payload, success: true };
       case CLIENT_REGISTER_FAILED:
          return { loading: false, error: action.payload };
       default:

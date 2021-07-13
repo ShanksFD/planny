@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Col, Row, Button, Form, FormControl, Table} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { LinkContainer } from 'react-router-bootstrap';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // Local imports
@@ -111,6 +111,9 @@ function SecretaryScreen() {
    }, [dispatch])
 
 
+   // init history
+   const history = useHistory()
+
    const isDetailsDeployed = useRef(false)
    useEffect(() => {
       if(projectDetails.success && !isDetailsDeployed.current)
@@ -149,9 +152,7 @@ function SecretaryScreen() {
                </Col>
 
                <Col lg={2} md={3} xs={4} sm={3}>
-                  <LinkContainer to="/client" >
-                     <Button>ADD PROJECT</Button>
-                  </LinkContainer>
+                  <Button onClick={() => history.push("/client")}>ADD PROJECT</Button>
                </Col>
             </Row>
          </Form>
