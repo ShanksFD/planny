@@ -3,7 +3,7 @@ import { Col, Row, Button, Form, Table, InputGroup} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { useHistory as history } from 'react-router';
 
 // Local imports
 import Loader from '../components/Loader';
@@ -12,7 +12,7 @@ import {listUsers, getUserDetails, updateUserProfile, deleteUser} from "../actio
 import {ADMINISTRATOR_PERM, SECRETARY_PERM, DIRECTOR_PERM, ACCOUNTING_MANGER_PERM, PROJECT_MANAGER_PERM} from '../utils'
 import Popup from '../components/Popup';
 
-function AdminScreen({history}) {
+function AdminScreen() {
    // Modals states
    const [firstName, setFirstName] = useState ("");
    const [lastName, setLastName] = useState("");
@@ -94,7 +94,7 @@ function AdminScreen({history}) {
       }
       
    }, [
-      history, userInfo, dispatch, 
+      userInfo, dispatch, 
       userDetails.success, 
       users.length, 
       userDetails.user,

@@ -43,7 +43,7 @@ function SecretaryScreen() {
    const projectUpdate = useSelector(state => state.projectUpdate)
 
    const getProjectManagerName = (id) => {
-      var name = "NA"
+      var name = "N/A"
       for(let i = 0; i < managersListRef.current.length; i++)
       {
          if(managersListRef.current[i].uid === id)
@@ -57,7 +57,7 @@ function SecretaryScreen() {
 
    const getClientName = useCallback((id) =>
    {
-      var name = "NA"
+      var name = "N/A"
       for(let i = 0; i < clientsRef.current.length; i++)
       {
          if(clientsRef.current[i]._id === id)
