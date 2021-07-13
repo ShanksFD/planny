@@ -233,7 +233,7 @@ export const getProjectManagerList = () => async (dispatch) => {
 
       dispatch({
          type: USER_MANAGER_LIST_SUCCESS,
-         payload: data,
+         payload: data
       });
 
    } catch (error) {

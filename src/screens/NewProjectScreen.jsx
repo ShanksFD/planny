@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import ProjectSteps from '../components/ProjectSteps';
 import {registerProject} from "../actions/projectActions"
+import {getProjectManagerList} from "../actions/userActions"
 
 function NewProjectScreen({history}) {
    const [title, setTitle] = useState("");
@@ -13,14 +14,17 @@ function NewProjectScreen({history}) {
    const [startDate, setStartDate] = useState("");
    const [endDate, setEndDate] = useState("");
    const [price, setPrice] = useState("");
+   const [managerId, setManager] = useState(-1)
 
    const dispatch = useDispatch()
    const {clientId} = useSelector(state => state.clientRegister)
    const projectRegister = useSelector(state => state.projectRegister)
+   const projectManagerList = useSelector(state => state.projectManagerList)
 
    const submitHandler = (e) => {
       e.preventDefault()
 
+         
       if(clientId)
       {
          dispatch(registerProject({
@@ -29,15 +33,19 @@ function NewProjectScreen({history}) {
             start_date: startDate,
             end_date: endDate,
             price: price,
-            client_id: clientId
+            client_id: clientId,
+            // FIXME: get default projectManager using another SAFE WAY :)
+            manager_id: managerId === -1 ? projectManagerList.users[0].uid : managerId
          }))
       }
    } 
 
    useEffect(() => {
+      dispatch(getProjectManagerList())
+
       if(projectRegister && projectRegister.success)
          history.push("/")
-   }, [projectRegister, history])
+   }, [projectRegister, history, dispatch])
    
    return (
       <FormContainer>
@@ -46,13 +54,28 @@ function NewProjectScreen({history}) {
          <h1 className="font--light text-center">NEW PROJECT</h1>
          <Form onSubmit={submitHandler}>
             <Row>
-               <Col>
+               <Col lg={6} md={6} sm={12}>
                   <Form.Group controlId="title" className="my-3">
                      <Form.Label>TITLE</Form.Label>
                      <Form.Control type="text" placeholder="Project title" value={title} onChange={((e) => {
                         setTitle(e.target.value)
                      })}
                      />
+                  </Form.Group>
+               </Col>
+
+               <Col lg={6} md={6} sm={12}>
+                  <Form.Group controlId="manager" className="my-3">
+                     <Form.Label>PROJECT MANAGER LIST</Form.Label>
+                        <Form.Control as="select" onChange={(e) => {
+                        setManager(e.target.value && 0)
+                     }}>
+                     {  !projectManagerList.error && 
+                           projectManagerList.users.map((u) => (
+                              <option key={u.uid} value={u.uid}>{u.first_name}  {u.last_name}</option>
+                           ))
+                        }
+                     </Form.Control>
                   </Form.Group>
                </Col>
             </Row>
@@ -96,7 +119,7 @@ function NewProjectScreen({history}) {
             </Row>
 
             
-            <Button type="submit" variant="primary">SAVE</Button>
+            <Button type="submit" variant="primary" disabled={projectManagerList.error || projectManagerList.users.length === 0}>SAVE</Button>
          </Form>
       </FormContainer>
    )

@@ -90,7 +90,7 @@ function NewClientScreen({history}) {
             </Row>
 
             
-            <Button type="submit" variant="primary">SAVE</Button>
+            <Button type="submit" variant="primary" disabled={!(firstName && lastName && email && website && phoneNumber)}>SAVE</Button>
          </Form>
       </FormContainer>
    )

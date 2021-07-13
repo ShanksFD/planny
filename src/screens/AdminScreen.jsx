@@ -157,7 +157,7 @@ function AdminScreen({history}) {
             buttonVariant="primary" 
             onConfirmation={editHandler}>
                {(userUpdateProfle.success && <Message variant="info">{updateMessage}</Message> ) ||
-               (userUpdateProfle.error && <Message variant="info">{updateMessage}</Message>) }
+               (userUpdateProfle.error && <Message variant="danger">{userUpdateProfle.error}</Message>) }
 
                {userDetails.loading ? <Loader/> 
                : userDetails.error ? <Message variant="danger">{userDetails.error}</Message>
