@@ -15,13 +15,21 @@ import {
    PROJECT_UPDATE_PROFILE_FAILED,
    PROJECT_UPDATE_PROFILE_SUCCESS,
 
+   PROJECT_UPDATE_PHASES_REQUEST,
+   PROJECT_UPDATE_PHASES_FAILED,
+   PROJECT_UPDATE_PHASES_SUCCESS,
+
    PROJECT_DETAILS_REQUEST,
    PROJECT_DETAILS_FAILED,
    PROJECT_DETAILS_SUCCESS,
 
    PROJECT_DELETE_REQUEST,
    PROJECT_DELETE_SUCCESS,
-   PROJECT_DELETE_FAILED
+   PROJECT_DELETE_FAILED,
+
+   PHASE_UPDATE_STATUS_REQUEST,
+   PHASE_UPDATE_STATUS_FAILED,
+   PHASE_UPDATE_STATUS_SUCCESS
 } from "../constants/projectConstants";
 import firebase, {timeStamp, storage} from "../firebase"
 import { v4 as uuidv4 } from 'uuid';
@@ -141,6 +149,69 @@ export const updateProject = (project, client) => async (dispatch) => {
    }
 };
 
+export const updateProjectPhase = (phase, projectId, projectPhases) => async (dispatch) => {
+   try {
+      dispatch({
+         type: PROJECT_UPDATE_PHASES_REQUEST,
+      });
+      phase.start_date = timeStamp.fromDate(new Date(phase.start_date))
+      phase.end_date = timeStamp.fromDate(new Date(phase.end_date))
+
+      const id = uuidv4();
+      phase._id = id;
+      phase.project_id = projectId;
+
+      // Apply new added phase
+      projectPhases.push(id)
+      await firebase.collection("projects").doc(projectId).update({
+         phases: projectPhases
+      });
+
+      // Add phase 
+      await firebase.collection("phase").doc(id).set(phase);
+
+      dispatch({
+         type: PROJECT_UPDATE_PHASES_SUCCESS
+      });
+
+   } catch (error) {
+      dispatch({
+         type: PROJECT_UPDATE_PHASES_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+};
+
+function formattedDate(startSeconds, endSeconds)
+{
+   // converting seconds to a date
+   var start_date = new Date(1970, 0, 1)
+   start_date.setSeconds(startSeconds);
+
+   // In order to apply this datatype to HTML date control we need to convert our date format
+   // to something like this 09-08-2021
+
+   var day = ("0" + start_date.getDate()).slice(-2);
+   var month = ("0" + (start_date.getMonth() + 1)).slice(-2);
+   
+   start_date = start_date.getFullYear() + "-" + month + "-" + day;
+
+   var end_date = new Date(1970, 0, 1)
+   end_date.setSeconds(endSeconds);
+
+   day = ("0" + end_date.getDate()).slice(-2);
+   month = ("0" + (end_date.getMonth() + 1)).slice(-2);
+
+   end_date = end_date.getFullYear() + "-" + month + "-" + day;
+
+   return {
+      startDate: start_date,
+      endDate: end_date
+   }
+}
 export const getProjectDetails = (id) => async (dispatch) => {
    try {
       dispatch({
@@ -154,26 +225,25 @@ export const getProjectDetails = (id) => async (dispatch) => {
       
 
       // converting seconds to a date
-      const startSeconds = data.start_date.seconds;
-      data.start_date = new Date(1970, 0, 1)
-      data.start_date.setSeconds(startSeconds);
+      const {startDate, endDate} = formattedDate(data.start_date.seconds, data.end_date.seconds)
+      data.start_date = startDate;
+      data.end_date = endDate;
 
-      // In order to apply this datatype to HTML date control we need to convert our date format
-      // to something like this 09-08-2021
 
-      var day = ("0" + data.start_date.getDate()).slice(-2);
-      var month = ("0" + (data.start_date.getMonth() + 1)).slice(-2);
-      
-      data.start_date = data.start_date.getFullYear() + "-" + month + "-" + day;
+      // Get phases list for each project
+      data.phasesObjs = await Promise.all(data.phases.map(async (p) => {
+         const docRef = await firebase.collection("phase").doc(p)
+         const doc = await docRef.get();
 
-      const endSeconds = data.end_date.seconds;
-      data.end_date = new Date(1970, 0, 1)
-      data.end_date.setSeconds(endSeconds);
+         var data = doc.data()
+         // converting seconds to a date
+         const {startDate, endDate} = formattedDate(data.start_date.seconds, data.end_date.seconds)
+         data.start_date = startDate;
+         data.end_date = endDate;
 
-      day = ("0" + data.end_date.getDate()).slice(-2);
-      month = ("0" + (data.end_date.getMonth() + 1)).slice(-2);
+         return data  
+      }))
 
-      data.end_date = data.end_date.getFullYear() + "-" + month + "-" + day;
 
       dispatch({
          type: PROJECT_DETAILS_SUCCESS,
@@ -234,14 +304,51 @@ export const listProjectsByManager = (manager_id) => async (dispatch) => {
          p.end_date.setSeconds(endSeconds);
       })
 
+      // Get phases list for each project
+      projects.forEach(async (p) => {
+         p.phasesObjs = await Promise.all(p.phases.map(async (p) => {
+            const docRef = await firebase.collection("phase").doc(p)
+            const doc = await docRef.get();
+            return doc.data()   
+         }))
+      })
          
       dispatch({
          type: MANAGER_PROJECT_LIST_SUCCESS,
-         payload: projects,
+         payload: projects
       });
    } catch (error) {
       dispatch({
          type: MANAGER_PROJECT_LIST_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+};
+
+export const updatePhaseStatus = (phaseId) => async (dispatch) => {
+   try {
+      dispatch({
+         type: PHASE_UPDATE_STATUS_REQUEST,
+      });
+
+      await firebase.collection("phase").doc(phaseId).update({
+         is_done: true
+      });
+
+      dispatch({
+         type: PHASE_UPDATE_STATUS_SUCCESS
+      });
+
+      dispatch({
+         type: PHASE_UPDATE_STATUS_SUCCESS
+      });
+      
+   } catch (error) {
+      dispatch({
+         type: PHASE_UPDATE_STATUS_FAILED,
          payload:
             error.response && error.response.data.detail
                ? error.response.data.detail

@@ -95,7 +95,7 @@ export const projectDeleteReducer = (state = {} , action) => {
 export const managerprojectsListReducer = (state = {projects: []}, action) => {
    switch (action.type) {
       case MANAGER_PROJECT_LIST_REQUEST:
-         return { loading: true, projects: [], clients: [] };
+         return { loading: true, projects: [] };
       case MANAGER_PROJECT_LIST_SUCCESS:
          return { loading: false, projects: action.payload };
       case MANAGER_PROJECT_LIST_FAILED:

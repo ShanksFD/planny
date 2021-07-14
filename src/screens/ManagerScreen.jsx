@@ -21,11 +21,13 @@ function ManagerScreen() {
       // List projects
       dispatch(listProjectsByManager(userInfo.uid))
    }, [dispatch, userInfo.uid])
+
+
    return (
       <>
          <Row className="my-4">
             <Col>
-               <h4>Select project to change</h4>
+               <h4>ADD PHASES</h4>
             </Col>
          </Row>
 
@@ -47,9 +49,16 @@ function ManagerScreen() {
                      <td>{p.start_date.toDateString()}</td>
                      <td>{p.end_date.toDateString()}</td>
                      <td>{p.price}</td>
-                     <td>{p.phases.length === 0 ? "NO PHASES" : "N/A"}</td>
+                     <td>
+                        {p.phases.length === 0 ? "NO PHASES" : 
+                           <Link to={`phases/${p._id}`} style={{color: "white"}}>
+                              {p.phases.length} PHASES
+                           </Link>
+                        }
+                        
+                     </td>
                      <td style={{textAlign: "center"}}>
-                        <Link to="phase" style={{color: "white"}}>
+                        <Link to={`phase/${p._id}`} style={{color: "white"}}>
                            <i className="fa fa-plus-circle" ></i>
                         </Link>
                      </td>

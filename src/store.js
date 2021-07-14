@@ -34,7 +34,7 @@ const reducer = combineReducers({
    projectUpdate: projectUpdateReducer,
    projectDetails: projectDetailsReducer,
    projectDelete: projectDeleteReducer,
-   projectsManagerList: managerprojectsListReducer
+   projectsManagerList: managerprojectsListReducer,
 });
 
 // load data from localStorage
