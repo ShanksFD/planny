@@ -24,7 +24,18 @@ var config = {
 
 ## Screenshots
 
-<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/PhasesScreen.PNG" width="80%">
-<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/Phases.PNG" width="80%">
-<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/NewPhase.PNG" width="80%">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/PhasesScreen.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/AdminScreen.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorScreen.PNG">
+
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/Phases.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/NewPhase.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/NewProjectScreen.PNG">
+
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/AdminEdit.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorEdit.PNG">
+<img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorDelete.PNG">
+
+
+
 
