@@ -116,9 +116,9 @@ function NewPhaseScreen({history, match}) {
             <Row>
                <Form.Group controlId="price" className="my-4">
                   <Form.Label style={{display: "block"}}>PRICE 
-                     <strong style={{color: "green"}}> (total: ${(projectDetails.project.price - calculatePhasesPrice()) || 0})</strong> 
+                     <strong style={{color: "green"}}> (total: ${(Number(projectDetails.project.price)) || 0})</strong> 
                   </Form.Label>
-                  <Form.Control required type="number" placeholder="Price" min="0" max={(projectDetails.project.price - calculatePhasesPrice()) || 0}
+                  <Form.Control required type="number" placeholder="Price" min="0" max={(projectDetails.project.price) || 0}
                      value={price} onChange={ e =>
                      {
                         setPrice(e.target.value)
