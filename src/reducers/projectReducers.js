@@ -7,6 +7,10 @@ import {
    PROJECT_LIST_REQUEST,
    PROJECT_LIST_SUCCESS,
 
+   MANAGER_PROJECT_LIST_FAILED,
+   MANAGER_PROJECT_LIST_REQUEST,
+   MANAGER_PROJECT_LIST_SUCCESS,
+
    PROJECT_UPDATE_PROFILE_REQUEST,
    PROJECT_UPDATE_PROFILE_SUCCESS,
    PROJECT_UPDATE_PROFILE_FAILED,
@@ -15,6 +19,7 @@ import {
    PROJECT_DETAILS_REQUEST,
    PROJECT_DETAILS_SUCCESS,
    PROJECT_DETAILS_FAILED,
+
    PROJECT_DELETE_REQUEST,
    PROJECT_DELETE_SUCCESS,
    PROJECT_DELETE_FAILED
@@ -82,6 +87,19 @@ export const projectDeleteReducer = (state = {} , action) => {
          return { loading: false, success: true};
       case PROJECT_DELETE_FAILED:
          return { loading: false, error: action.payload};
+      default:
+         return state;
+   }
+};
+
+export const managerprojectsListReducer = (state = {projects: []}, action) => {
+   switch (action.type) {
+      case MANAGER_PROJECT_LIST_REQUEST:
+         return { loading: true, projects: [], clients: [] };
+      case MANAGER_PROJECT_LIST_SUCCESS:
+         return { loading: false, projects: action.payload };
+      case MANAGER_PROJECT_LIST_FAILED:
+         return { loading: false, error: action.payload };
       default:
          return state;
    }

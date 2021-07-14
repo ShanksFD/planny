@@ -16,7 +16,7 @@ import NewPhaseScreen from "./screens/NewPhaseScreen";
 import PrivateRoute from "./components/PrivateRoute";
 
 // Constants
-import {ADMINISTRATOR_PERM, SECRETARY_PERM} from './utils'
+import {ADMINISTRATOR_PERM, PROJECT_MANAGER_PERM, SECRETARY_PERM} from './utils'
 import {LINK_NEW_CLIENT, LINK_NEW_PROJECT, LINK_NEW_PHASE, LINK_NEW_USER} from './constants/linkConstants'
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
 
         <PrivateRoute path={LINK_NEW_USER} component={NewUserScreen} permName={ADMINISTRATOR_PERM} exact/> 
         <Route path={LINK_NEW_CLIENT} component={NewClientScreen} permName={SECRETARY_PERM} exact/> 
-        <PrivateRoute path={LINK_NEW_PHASE} component={NewPhaseScreen} permName={SECRETARY_PERM} exact/> 
+        <PrivateRoute path={LINK_NEW_PHASE} component={NewPhaseScreen} permName={PROJECT_MANAGER_PERM} exact/> 
         <PrivateRoute path={LINK_NEW_PROJECT} component={NewProjectScreen} permName={SECRETARY_PERM} exact/> 
       </main>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import {useForm} from "react-hook-form"
@@ -28,7 +28,7 @@ function NewProjectScreen({history}) {
    const submitHandler = (e, data) => {
       e.preventDefault()
 
-      if(clientId)
+      if(true)
       {
          dispatch(registerProject({
             title: title,
@@ -50,15 +50,16 @@ function NewProjectScreen({history}) {
          setMessage("Please upload a valid files")
       else
       {
+         isProjetReg.current = true
          setMessage("")
          submitHandler(event, data)
       }            
    }
-      
+   const isProjetReg = useRef(false)
    useEffect(() => {
       dispatch(getProjectManagerList())
 
-      if(projectRegister && projectRegister.success)
+      if(isProjetReg.current && projectRegister && projectRegister.success)
          history.push("/")
    }, [projectRegister, history, dispatch])
    
@@ -85,7 +86,7 @@ function NewProjectScreen({history}) {
                   <Form.Group controlId="manager" className="my-3">
                      <Form.Label>PROJECT MANAGER LIST</Form.Label>
                         <Form.Control required as="select" onChange={(e) => {
-                        setManager(e.target.value && 0)
+                        setManager(e.target.value)
                      }}>
                      {  !projectManagerList.error && 
                            projectManagerList.users.map((u) => (

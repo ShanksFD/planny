@@ -9,7 +9,12 @@ import { userLoginReducer,
    userDeleteReducer,
    projectManagerListReducer
    } from "./reducers/userReducers";
-import {projectRegisterReducer, projectListReducer, projectUpdateReducer, projectDetailsReducer, projectDeleteReducer} from "./reducers/projectReducers"
+import {projectRegisterReducer, 
+   projectListReducer, 
+   projectUpdateReducer, 
+   projectDetailsReducer, 
+   projectDeleteReducer,
+   managerprojectsListReducer} from "./reducers/projectReducers"
 import {clientRegisterReducer, clientDetailsReducer} from "./reducers/clientReducers"
 
 const reducer = combineReducers({
@@ -28,7 +33,8 @@ const reducer = combineReducers({
    projectsList: projectListReducer,
    projectUpdate: projectUpdateReducer,
    projectDetails: projectDetailsReducer,
-   projectDelete: projectDeleteReducer
+   projectDelete: projectDeleteReducer,
+   projectsManagerList: managerprojectsListReducer
 });
 
 // load data from localStorage

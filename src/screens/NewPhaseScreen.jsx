@@ -3,7 +3,6 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 
 // Local Imports
 import FormContainer from '../components/FormContainer';
-import ProjectSteps from '../components/ProjectSteps';
 
 function NewPhaseScreen({history}) {
 
@@ -15,33 +14,32 @@ function NewPhaseScreen({history}) {
 
    return (
       <FormContainer>
-         <ProjectSteps step1 step2 step3/>
-
          <h1 className="font--light text-center">NEW PHASE</h1>
          <Form onSubmit={submitHandler}>
             <Row>
-               <Col lg={6} md={6} sm={12}>
-                  <Form.Group controlId="labal" className="my-3">
+               <Col>
+                  <Form.Group controlId="label" className="my-3">
                      <Form.Label>LABEL</Form.Label>
                      <Form.Control type="text" placeholder="Phase label" />
                   </Form.Group>
                </Col>
 
-               <Col lg={6} md={6} sm={12}>
-                  <Form.Group controlId="client" className="my-3">
-                     <Form.Label>CLIENT</Form.Label>
-                     <Form.Control type="text" placeholder="Client full name" />
-                  </Form.Group>
-               </Col>
             </Row>
 
             <Row>
                <Form.Group controlId="description" className="my-3">
                   <Form.Label>DESCRIPTION</Form.Label>
-                  <Form.Control as="textarea" rows={3} placeholder="Phase description" />
+                  <Form.Control as="textarea" rows={2} placeholder="Phase description" />
                </Form.Group>
             </Row>
             
+            <Row>
+               <Form.Group controlId="description" className="my-3">
+                  <Form.Label>EMPLOYEES</Form.Label>
+                  <Form.Control as="textarea" rows={2} placeholder="Empolyees" />
+               </Form.Group>
+            </Row>
+
             <Row>
               <Col lg={6} md={6} sm={12}>
                   <Form.Group controlId="startDate" className="my-3">
@@ -59,13 +57,13 @@ function NewPhaseScreen({history}) {
             </Row>
 
             <Row>
-               <Form.Group controlId="price" className="my-3">
+               <Form.Group controlId="price" className="my-4">
                   <Form.Label>PRICE</Form.Label>
                   <Form.Control type="text" placeholder="Price"/>
                </Form.Group>
             </Row>
             
-            <Button type="submit" variant="primary">SAVE</Button>
+            <Button type="submit" variant="primary" className="my-2">SAVE</Button>
             <Button type="submit" variant="primary"  className="mx-3">SAVE AND ADD ANOTHER</Button>
          </Form>
       </FormContainer>

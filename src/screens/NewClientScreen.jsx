@@ -1,25 +1,28 @@
 import React, { useState } from 'react'
 import { Form, Button, Col, Row, InputGroup } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
-
+import { useHistory } from 'react-router';
 
 // Local Imports
 import { registerClient } from '../actions/clientActions';
 import FormContainer from '../components/FormContainer';
 import ProjectSteps from '../components/ProjectSteps';
 
-function NewClientScreen({history}) {
+function NewClientScreen() {
+   // init states
    const [email, setEmail] = useState("");
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
    const [phoneNumber, setPhoneNumber] = useState("");
    const [website, setWebsite] = useState("");
 
-
    const dispatch = useDispatch()
 
+   // init history
+   const history = useHistory()
+   
    const submitHandler = (e) => {
-      e.preventDefault()
+      // e.preventDefault()
 
       dispatch(registerClient({
          first_name: firstName,
@@ -28,6 +31,7 @@ function NewClientScreen({history}) {
          phone_number: phoneNumber,
          website: website
       }))
+      console.log("SS")
       history.push('/project')
    } 
 

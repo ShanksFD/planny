@@ -3,6 +3,10 @@ import {
    PROJECT_LIST_REQUEST,
    PROJECT_LIST_SUCCESS,
 
+   MANAGER_PROJECT_LIST_FAILED,
+   MANAGER_PROJECT_LIST_REQUEST,
+   MANAGER_PROJECT_LIST_SUCCESS,
+
    PROJECT_REGISTER_FAILED,
    PROJECT_REGISTER_REQUEST,
    PROJECT_REGISTER_SUCCESS,
@@ -14,6 +18,7 @@ import {
    PROJECT_DETAILS_REQUEST,
    PROJECT_DETAILS_FAILED,
    PROJECT_DETAILS_SUCCESS,
+
    PROJECT_DELETE_REQUEST,
    PROJECT_DELETE_SUCCESS,
    PROJECT_DELETE_FAILED
@@ -37,7 +42,8 @@ export const registerProject = ({title, description, start_date, end_date, price
          price: price,
          client_id: client_id,
          _id: id,
-         manager_id: manager_id
+         manager_id: manager_id,
+         phases: []
       }
 
       const storageRef = storage.ref()
@@ -208,3 +214,38 @@ export const deleteProject = (projectId, clientId) => async (dispatch) => {
       });
    }
 }
+
+export const listProjectsByManager = (manager_id) => async (dispatch) => {
+   try {
+      dispatch({
+         type: MANAGER_PROJECT_LIST_REQUEST,
+      });
+
+      const snapshot = await firebase.collection("projects").where("manager_id", "==", manager_id).get()
+      const projects = snapshot.docs.map(doc => doc.data());
+
+      projects.forEach((p) => {
+         const startSeconds = p.start_date.seconds;
+         p.start_date = new Date(1970, 0, 1)
+         p.start_date.setSeconds(startSeconds);
+
+         const endSeconds = p.end_date.seconds;
+         p.end_date = new Date(1970, 0, 1)
+         p.end_date.setSeconds(endSeconds);
+      })
+
+         
+      dispatch({
+         type: MANAGER_PROJECT_LIST_SUCCESS,
+         payload: projects,
+      });
+   } catch (error) {
+      dispatch({
+         type: MANAGER_PROJECT_LIST_FAILED,
+         payload:
+            error.response && error.response.data.detail
+               ? error.response.data.detail
+               : error.message,
+      });
+   }
+};

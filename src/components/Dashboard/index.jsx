@@ -6,6 +6,7 @@ import {Container} from 'react-bootstrap'
 import AdminScreen from "../../screens/AdminScreen"
 import SecretaryScreen from "../../screens/SecretaryScreen"
 import DirectorScreen from '../../screens/DirectorScreen'
+import ManagerScreen from '../../screens/ManagerScreen'
 
 
 function Dashboard() {
@@ -15,7 +16,7 @@ function Dashboard() {
       <Container>
          {userInfo.is_admin ? <AdminScreen/>
          : userInfo.is_director ? <DirectorScreen/>
-         : userInfo.is_projectManager ? "Project Manager Dashboard"
+         : userInfo.is_projectManager ? <ManagerScreen/>
          : userInfo.is_accountingManager ? "Accounting Dashboard"
          : userInfo.is_secretary ? <SecretaryScreen/>
          : ""}
