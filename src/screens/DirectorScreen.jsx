@@ -27,8 +27,10 @@ function DirectorScreen() {
    const [projectId, setProjectId] = useState()
    const [clientId, setClientId] = useState()
    const [updateMessage, setUpdateMessage] = useState("")
-
-
+   const projectDetails = useSelector(state => state.projectDetails)
+   const [managerId, setManager] = useState(-1)
+   
+   const projectManagerList = useSelector(state => state.projectManagerList)
    const { projects } = useSelector(state => state.projectsList)
 
    // UseRef to prevent upcoming renders
@@ -41,7 +43,6 @@ function DirectorScreen() {
    const managersListRef = useRef(null)
    managersListRef.current = managersList.users
 
-   const projectDetails = useSelector(state => state.projectDetails)
    const projectUpdate = useSelector(state => state.projectUpdate)
 
    const getProjectManagerName = (id) => {
@@ -92,6 +93,7 @@ function DirectorScreen() {
    const dispatch = useDispatch()
 
    const editHandler = () => {
+      var managerIdUpdated = managerId === -1 ? projectDetails.project.manager_id : managerId;
       dispatch(updateProject(
          {
             title: title,
@@ -99,7 +101,8 @@ function DirectorScreen() {
             start_date: startDate,
             end_date: endDate,
             price: price,
-            _id: projectId
+            _id: projectId,
+            manager_id: managerIdUpdated
          },
          {
             first_name: clientFName,
@@ -115,12 +118,10 @@ function DirectorScreen() {
    }, [dispatch])
 
 
-   const isDetailsDeployed = useRef(false)
    useEffect(() => {
-      if(projectDetails.success && !isDetailsDeployed.current)
+      if(projectDetails.success)
       {
          initForms(projectDetails.project)
-         isDetailsDeployed.current = true
       }
 
       if(projectUpdate.success)
@@ -194,6 +195,7 @@ function DirectorScreen() {
          <Popup show={editModalShow} onHide={() => {
             setEditModalShow(false)
             dispatch({type: PROJECT_UPDATE_PROFILE_RESET})
+            setManager(-1)
             dispatch(listProjects())
          }} title="Edit" 
             confirmation={true}
@@ -209,35 +211,30 @@ function DirectorScreen() {
                : projectDetails.error ? <Message variant="danger">{projectDetails.error}</Message>
             : (
             <Form autoComplete="off">
-               <h4  className="my-3">CLIENT<hr/></h4>
                <Row>
                   <Col lg={6} md={6} sm={12}>
-                     <Form.Group controlId="client_fname" className="my-3">
-                        <Form.Label>FIRST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter first name" value={clientFName} onChange={ e => {
-                           setClientFName(e.target.value);
+                     <Form.Group controlId="title" className="my-3">
+                        <Form.Label>TITLE</Form.Label>
+                        <Form.Control type="text" placeholder="Enter title" value={title} onChange={ e => {
+                           setTitle(e.target.value);
                         }}/>
                      </Form.Group>
                   </Col>
 
                   <Col lg={6} md={6} sm={12}>
-                     <Form.Group controlId="client" className="my-3">
-                        <Form.Label>LAST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter last name" value={clientLName} onChange={ e => {
-                           setClientLName(e.target.value);
-                        }}/>
+                     <Form.Group controlId="manager" className="my-3">
+                        <Form.Label>PROJECT MANAGER</Form.Label>
+                           <Form.Control value={managerId === -1 ? projectDetails.project.manager_id : managerId} required as="select" onChange={(e) => {
+                           setManager(e.target.value)
+                        }}>
+                        {  !projectManagerList.error && 
+                              projectManagerList.users.map((u) => (
+                                 <option key={u.uid} value={u.uid}>{u.first_name}  {u.last_name}</option>
+                              ))   
+                           }
+                        </Form.Control>
                      </Form.Group>
                   </Col>
-               </Row>
-               
-               <h4  className="my-3">PROJECT<hr/></h4>
-               <Row>
-                  <Form.Group controlId="title" className="my-3">
-                     <Form.Label>TITLE</Form.Label>
-                     <Form.Control type="text" placeholder="Enter title" value={title} onChange={ e => {
-                        setTitle(e.target.value);
-                     }}/>
-                  </Form.Group>
                </Row>
 
                <Row>
@@ -290,7 +287,7 @@ function DirectorScreen() {
                dispatch(deleteProject(projectId, clientId))
                setDeleteModalShow(false)
             }}>
-               <p>Are you sure you want to delete this user?</p>
+               <p>Are you sure you want to delete this project?</p>
          </Popup>
       </>
    )

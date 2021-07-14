@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
 import {Col, Row, Table} from "react-bootstrap"
 import { useDispatch, useSelector } from 'react-redux'
-import {useHistory} from "react-router"
 import { Link } from 'react-router-dom'
 
 // Local imports
 import {listProjectsByManager} from "../actions/projectActions"
 
 function ManagerScreen() {
-   // init history 
-   const history = useHistory()
 
    // init states
    const {userInfo} = useSelector(state =>  state.userLogin)
