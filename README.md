@@ -50,7 +50,7 @@ New Project Screen , is a screen accessed by the secretary with an objectif to a
 
 Pop ups : 
 
-The pop ups below were used for the editing and deletes parts of the project to display it to the user on top of the screen pages without redirections to other pages.
+The pop ups below were used for the editing and deletes parts of the project to display it to the user on top of the screens without redirections to other pages.
 
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/AdminEdit.PNG">
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorEdit.PNG">
