@@ -24,34 +24,26 @@ var config = {
 
 ## Screenshots
 
-The Project Manager's Screen , the manager is allowed to update the projects that he directs by dividung them into phases while indicating the phases informations such as " Label , Description , Employee , Start Date , End Date and the Price " . 
-
+The Project Manager's Screen, the manager is allowed to update the projects that he directs by dividing them into phases while indicating the phases informations such as "Label, Description, Employee, Start Date, End Date and the Price".
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/PhasesScreen.PNG">
 
-The Administrator's Screen , the admin has the possibility to add , update and delete a user while indicating the user's profession " Administartor , Project Manager , Secretary ... " .
-
+The Administrator's Screen, the admin has the possibility to add, update and delete a user while indicating the user's profession "Administartor, Project Manager, Secretary...".
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/AdminScreen.PNG">
 
-The Director's Screen , the director has only the option to update all the project's informations specialy the price and the project manager . 
-
+The Director's Screen, the director has only the option to update all the project's informations specialy the price and the project manager. 
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorScreen.PNG">
 
-This Screen displays a project's phases with all the necessary informations , and a button " Mark As Done " for the project manager to use when a phase is completed .
-
+This Screen displays a project's phases with all the necessary informations, and a button "Mark As Done" for the project manager to use when a phase is completed.
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/Phases.PNG">
 
-New Phase Screen , is where the project manager upload a neww project phase with all the informations shown in the form .
-
+New Phase Screen, is where the project manager upload a new project phase with all the informations shown in the form.
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/NewPhase.PNG">
 
-New Project Screen , is a screen accessed by the secretary with an objectif to add a new project "informations included" to the company's data base .
-
+New Project Screen, is a screen accessed by the secretary with an objectif to add a new project "Informations included" to the company's data base.
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/NewProjectScreen.PNG">
 
 Pop ups : 
-
 The pop ups below were used for the editing and deletes parts of the project to display it to the user on top of the screens without redirections to other pages.
-
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/AdminEdit.PNG">
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorEdit.PNG">
 <img src="https://github.com/ShanksFD/planny/blob/master/screenshots/DirectorDelete.PNG">
