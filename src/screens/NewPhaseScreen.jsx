@@ -3,7 +3,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 // Local Imports
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../components/formContainer";
 import {
   getProjectDetails,
   updateProjectPhase,

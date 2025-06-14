@@ -9,8 +9,8 @@ import NewUserScreen from "./screens/NewUserScreen";
 import NewProjectScreen from "./screens/NewProjectScreen";
 
 // Components
-import Footer from "./components/Footer"
-import Header from './components/Header'
+import Footer from "./components/footer"
+import Header from './components/header'
 import NewClientScreen from "./screens/NewClientScreen";
 import NewPhaseScreen from "./screens/NewPhaseScreen";
 import PhasesScreen from "./screens/PhasesScreen";
