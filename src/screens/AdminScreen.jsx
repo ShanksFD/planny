@@ -111,7 +111,7 @@ function AdminScreen() {
           <Row >
             <Col  className="py-4">
                <div style={{float: "right"}} >
-                  <Button onClick={() => history.push("/user")}>ADD USER</Button>
+                  <Button href="/user">ADD USER</Button>
                </div>
             </Col>
          </Row>
