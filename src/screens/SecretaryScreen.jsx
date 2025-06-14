@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Col, Row, Button, Form, FormControl, Table} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // Local imports
@@ -111,9 +110,6 @@ function SecretaryScreen() {
    }, [dispatch])
 
 
-   // init history
-   const history = useHistory()
-
    useEffect(() => {
       if(projectDetails.success)
       {
@@ -150,7 +146,7 @@ function SecretaryScreen() {
                </Col>
 
                <Col lg={2} md={3} xs={4} sm={3}>
-                  <Button onClick={() => history.push("/client")}>ADD PROJECT</Button>
+                  <Button href='/client'>ADD PROJECT</Button>
                </Col>
             </Row>
          </Form>
